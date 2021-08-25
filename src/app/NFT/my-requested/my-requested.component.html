@@ -1,0 +1,215 @@
+<!--header-->
+<header class="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 d-flex justify-content-between align-items-center">
+
+                <a href="index" class="logo">
+                    <span class="color_blue">bundles</span>
+                    <span class="color_white">finance</span>
+                </a>
+                <div class="">
+
+
+                    <div class="dropdown nav-item">
+                        <a class="dropdown-toggle nav-link" href="#" role="button" id="basic-nav-dropdown"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="/NFT/account"><img src="./../../../assets/images/user.svg" alt=""></a>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="basic-nav-dropdown">
+                            <span class="pop-arrow"></span>
+                            <!-- <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/profile">Profile</a> -->
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center"
+                                routerLink="/NFT/marketplace">MarketPlace</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/my-collections">My
+                                Collections</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/account">Account</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!--contents-->
+<main>
+    <app-sidebar></app-sidebar>
+    <div class="bundles_contents_main">
+        <div class="d-flex align-items-center justify-content-between border-bottom py-2 mb-3">
+            <a routerLink="/NFT/marketplace" class="bundles_back" style="left: 279px;"><img
+                    src="../../../assets/images/back-arrow.svg" alt="" /></a>
+            <div class="f28-500 ">My Requests</div>
+            <a routerLink="/NFT/create" class="bundles_outlineblueBtn bundles_roundBtn">Create New</a>
+        </div>
+        <div class="d-flex align-items-center border-bottom bundles_tabs">
+            <button type="button" (click)="target('all')" [ngClass]="{'active':currentTab === 'all'}">All</button>
+            <button type="button" (click)="target('approve')"
+                [ngClass]="{'active':currentTab === 'approve'}">Approved</button>
+            <button type="button" (click)="target('decline')"
+                [ngClass]="{'active':currentTab === 'decline'}">Declined</button>
+            <button type="button" (click)="target('pending')"
+                [ngClass]="{'active':currentTab === 'pending'}">Pending</button>
+        </div>
+
+        <div class="tabs_panel mt-4"
+            *ngIf="currentTab === 'approve' || currentTab === 'decline' || currentTab === 'all' || currentTab === 'pending' ">
+            <div class="row">
+                <ng-container *ngFor="let obj of screenArray;">
+
+                    <div class="col-xl-3 col-sm-6 mb-5 my_clsn_bx">
+                        <a href="javascript:;" class="as_nft_bx" style="    cursor: default;">
+                            <img style="width: 100%;height:255px;"
+                                src="{{obj && obj.nft_detail.nft_image ? obj.nft_detail.nft_image :'https://login.connect.realtor/7a8cbb7079d70bd64c469435a71b4db9.gif'}}"
+                                class="img-fluid w-100" alt="">
+                            <div class="as_in_nft_bx">
+
+                                <div class="d-flex justify-content-between">
+                                    <h6>ID : {{obj && obj.index ? obj.index :'0'}}</h6>
+                                    <h6 *ngIf="currentTab === 'auction'">On Auction : {{obj && obj.NFTAuctionCount ?
+                                        obj.NFTAuctionCount :'0'}}</h6>
+                                    <h6 *ngIf="currentTab === 'sale'">On Sell : {{obj && obj.NFTSaleCount ?
+                                        obj.NFTSaleCount :'0'}}</h6>
+
+                                </div>
+
+                                <div class="d-flex">
+                                    <h4>{{obj && obj.nft_detail.nft_name ? obj.nft_detail.nft_name :'--'}} &nbsp;</h4>
+
+                                    <span class="badge badge-pill badge-success" style="max-height: 22px;"
+                                        *ngIf=" obj.isMinted  == true">Approved</span>
+                                    <span class="badge badge-pill badge-danger" style="max-height: 22px;"
+                                        *ngIf=" obj.isMinted == false && obj.statusApprove != ''">Declined</span>
+                                    <span class="badge badge-pill badge-warning" style="max-height: 22px;"
+                                        *ngIf=" obj.isMinted == false && obj.statusApprove == ''">Pending</span>
+
+                                </div>
+                                <p>{{obj && obj.nft_detail.nft_desc ? obj.nft_detail.nft_desc :'--'}}</p>
+                                <h5 *ngIf="obj.price">Price: {{obj && obj.price ? obj.price :'-'}} BundNFT</h5>
+                                <h5 *ngIf="!obj.price" class="mb-2">Artist NFT</h5>
+
+                                <div class="d-flex justify-content-center" *ngIf="obj.purchased != 0 ">
+
+                                    <button class="btn_h40 bundles_outlineblueBtn  mr-5" type="button"
+                                        (click)="onClickRoute('view',obj)">View</button>
+
+                                    <button class="btn_h40 bundles_blueBtn  mr-5" type="button"
+                                        *ngIf="currentTab === 'decline'"
+                                        (click)="onClickRoute('reason',obj)">Reason</button>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<!--footer-->
+<footer>
+    <div class="container">
+        <h3 class="mt-5">Links</h3>
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDefi" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Announcements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDiscussion" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Discussion </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://medium.com/@bundles.finance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Medium</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/BundlesFinance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/twitter.png" alt=""></span>
+                            <span class="label">Twitter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.coingecko.com/en/coins/bundles" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coingecko.webp" alt=""></span>
+                            <span class="label">CoinGecko</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://coinmarketcap.com/currencies/bundles/" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coinmarketcap.png" alt=""></span>
+                            <span class="label">CoinMarketCap</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://app.uniswap.org/#/swap?inputCurrency=0x8d3e855f3f55109d473735ab76f753218400fe96"
+                            target="_blank">
+                            <span class="icon"><img src="../../assets/images/uniswap.png" alt=""></span>
+                            <span class="label">Uniswap</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://bit.ly/2MxOsWC" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Tokenomics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/channel/UC9mrNsIf11EJ7oIkaDuX9FQ" target="_blank">
+                            <span class="icon"><img src="../../assets/images/youtube.jpeg" alt=""></span>
+                            <span class="label">Join our channel</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- DECline model -->
+<div class="modal fade defmodal" id="DeclineModal" tabindex="-1" role="dialog" aria-labelledby="DeclineModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close closeas" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+                <h2>Reason For Decline</h2>
+                <form name="declineForm" [formGroup]="declineForm">
+
+                    <div class="custom_range position-relative mb-4">
+                        <p class="fs_16 color_blue mb-2">Reason</p>
+                        <textarea type="text" class="form-control" rows="5" disabled formControlName="reason">
+                            </textarea>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+.cmngsn {
+    a {
+        position: relative;
+        display: inline-block;
+        color: #000;
+        margin: 0;
+        font-size: 60px;
+        &::before {
+            top: 32px;
+        }
+        @media screen and (max-width: 575px) {
+            font-size: 42px;
+            &::before {
+                top: 22px;
+            }
+        }
+    }
+    .bf_breadcrumb {
+        text-align: center;
+    }
+}
+
+.blueBtn{
+    margin-bottom: 50px;
+    background: #ffffff;
+    color: #212121;
+    
+    &:hover{
+        background: #5454FF;
+        color: #ffffff;
+        img{
+            filter: invert(1);
+        }
+    }
+}
+.modal-content{
+    background: #f1f1f1;
+}
+

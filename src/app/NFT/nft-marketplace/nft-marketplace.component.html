@@ -1,0 +1,217 @@
+<!-- <app-header></app-header> -->
+
+<header class="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg navbar-dark">
+                    <a href="https://bundles.finance/" class="logo">
+                        <span class="color_blue">bundles</span>
+                        <span class="color_white">finance</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+
+                        </ul>
+                    </div>
+                    <div class="">
+
+
+                        <div class="dropdown nav-item">
+                            <a class="dropdown-toggle nav-link" href="#" role="button" id="basic-nav-dropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a href="/NFT/account"><img src="./../../../assets/images/user.svg" alt=""></a>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="basic-nav-dropdown">
+                                <span class="pop-arrow"></span>
+                                <!-- <div class="dropdown-divider" role="separator"></div>
+                                <a class="dropdown-item d-flex justify-content-center"
+                                    routerLink="/NFT/profile">Profile</a> -->
+                                <div class="dropdown-divider" role="separator"></div>
+                                <a class="dropdown-item d-flex justify-content-center"
+                                    routerLink="/NFT/marketplace">MarketPlace</a>
+                                <div class="dropdown-divider" role="separator"></div>
+                                <a class="dropdown-item d-flex justify-content-center"
+                                    routerLink="/NFT/my-collections">My
+                                    Collections</a>
+                                <div class="dropdown-divider" role="separator"></div>
+                                <a class="dropdown-item d-flex justify-content-center"
+                                    routerLink="/NFT/account">Account</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="nft_marketplaceMain">
+        <div class="nft_leftFilterMain">
+            <div class="fs_16">Filter
+                <!-- <label class="nft_radiobox">
+                    <input type="radio" name="filter" />
+                    <span class="pd-0">Clear</span>
+                </label> -->
+            </div>
+            <hr />
+
+            <!-- <label class="nft_radiobox ">
+                <input type="radio" name="filter" />
+                <span>Buy Now</span>
+            </label> -->
+            <label class="nft_radiobox">
+                <input type="checkbox" (click)="onClickFilter('auction',$event)" name="filter" />
+                <span>On Auction</span>
+            </label>
+            <label class="nft_radiobox">
+                <input type="checkbox" (click)="onClickFilter('sale',$event)" name="filter" />
+                <span>On Sale</span>
+            </label>
+            <!-- <label class="nft_radiobox">
+                <input type="radio" name="filter"/>
+                <span>Declined</span>
+            </label> -->
+
+            <!-- <div class="fs_16">Filter</div>
+          -->
+            <hr />
+            <!-- <div class="fs_16">By copies </div>
+            <hr />
+
+
+            <select class="bundles_selectbox w-100 bg-m">
+                <option value="0">Copies</option>
+
+                <option value="1">less then 5</option>
+                <option value="2">less then 10</option>
+                <option value="3">less then 15</option>
+                <option value="4">less then 20</option>
+                <option value="5">less then 15</option>
+
+            </select> -->
+
+        </div>
+        <div class="nft_marketplace_right">
+            <div class="container py_100 cmngsn pt-4">
+                <div class="row">
+                    <div class="col-sm-12 sm_brdcrmb">
+                        <div class="align-items-center justify-content-between d-flex">
+                            <div class="justify-content-between">
+
+                                <span class="bf_breadcrumb mr-3">
+                                    <a href="index">NFT Marketplace</a>
+                                </span>
+                                <button routerLink="/NFT/create" class="bundles_outlineblueBtn bundles_roundBtn">Create
+                                    New</button>
+                            </div>
+
+                        </div>
+                        <div class="d-flex flex-wrap align-items-center">
+
+                        </div>
+                    </div>
+                    <div class="col-xl-12 mt-5">
+                        <div class="row">
+                            <!-- <div *ngFor="let obj of showData;" class="col-xl-3 col-sm-6 mb-5 ">
+                                <div class="as_nft_bx" style="cursor: pointer;">
+                                    <img  (click)="onClickRoute(obj)" src="{{obj && obj.nft_detail.nft_image ? obj.nft_detail.nft_image :'./assets/images/nft_img_01.jpg'}}"
+                                        class="img-fluid imageHeight" alt="" />
+                                    <div class="as_in_nft_bx">
+                                        <div (click)="onClickRoute(obj)">
+                                            <h6>ID : {{obj && obj.index ? obj.index :'0'}}</h6>
+                                            <h6>Copies : {{obj && obj.copies ? obj.copies :'0' }}</h6>
+                                            <h4>{{obj && obj.nft_detail.nft_name ? obj.nft_detail.nft_name :'--'}}</h4>
+                                            <p> {{obj && obj.nft_detail.nft_desc ? obj.nft_detail.nft_desc :'--'}}</p>
+                                            <h5 *ngIf="obj.price">Price: {{obj && obj.price ? obj.price :'-'}} </h5>
+                                            <h5 *ngIf="!obj.price">Artist NFT</h5>
+                                        </div>
+            
+                                        <div class="justify-content-end text-right mt-2"
+                                            *ngIf="ownerAccount == userAccount && !obj.isMinted">
+                                            <button class="btn_custom blue" (click)="approveArtist(obj)" style="height: 35px; 
+                                            min-width: 90px;">Approve</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <ng-container *ngFor="let obj of screenArray;">
+
+                                <div class="col-xl-3 col-sm-6 mb-5">
+                                    <div class="as_nft_bx w-100" style="cursor: pointer;">
+                                        <div class="position-relative">
+                                            <img (click)="onClickRoute(obj)"
+                                                src="{{obj && obj.nft_detail.nft_image ? obj.nft_detail.nft_image :'https://login.connect.realtor/7a8cbb7079d70bd64c469435a71b4db9.gif'}}"
+                                                class="img-fluid imageHeight" alt="" />
+                                                <h5 class="saleTag" *ngIf="obj.NFTAuctionCount != 0"><span class="badge badge-primary">Auction</span></h5>
+                                                <h5 class="saleTagleft" *ngIf="obj.NFTSaleCount != 0" ><span class="badge badge-info">Sale</span></h5>
+                                        </div>
+                                    
+
+                                        <div class="as_in_nft_bx">
+                                            <div (click)="onClickRoute(obj)">
+                                                <!-- <h6>ID : {{obj && obj.index ? obj.index :'0'}}</h6> -->
+
+                                                <div class="d-flex d-flex justify-content-between">
+
+                                                    <h6>ID : {{obj && obj.index ? obj.index :'0'}}</h6>
+                                                    <!--  -->
+                                                    <h6 *ngIf="obj.NFTAuctionCount != 0" >On Auction
+                                                        : {{obj && obj.NFTAuctionCount ?
+                                                        obj.NFTAuctionCount :'0'}}</h6>
+                                                    <!--  -->
+                                                  
+
+                                                    <!-- <div class="col-md-6 justify-content-end text-align-right">
+                                                        <img style="max-width: 65px;  max-height: 65px;" src="../../../assets/images/NFTs/sale.png" />
+                                                    </div> -->
+
+                                                </div>
+
+                                                <div class="d-flex d-flex justify-content-between">
+                                                    <h6>Copies : {{obj && obj.copies ? obj.copies :'0' }}</h6>
+                                                    <h6 *ngIf="obj.NFTSaleCount != 0">Sellers:
+                                                        {{obj && obj.NFTSaleCount ?
+                                                        obj.NFTSaleCount :'0'}} </h6>
+                                                </div>
+
+
+                                                <h4>{{obj && obj.nft_detail.nft_name ? obj.nft_detail.nft_name
+                                                    :'--'}}</h4>
+                                                <p> {{obj && obj.nft_detail.nft_desc ? obj.nft_detail.nft_desc
+                                                    :'--'}}</p>
+                                                <h5 *ngIf="obj.price && obj.nft_detail.nft_isSelf == '0'">Available on Platform for : {{obj
+                                                    && obj.price ? obj.price +' BUND NFT' :'-'}}
+                                                </h5>
+                                                <h5 *ngIf="!obj.price && obj.nft_detail.nft_isSelf == '1'">Artist NFT
+                                                </h5>
+                                            </div>
+
+                                            <!-- <div class="justify-content-end text-right mt-2"
+                                                    *ngIf="ownerAccount == userAccount && !obj.isMinted">
+            
+                                                    <button class="btn_custom blue" (click)="rejectArtistOUT(obj)" style="height: 35px; 
+                                                    min-width: 90px;">Decline</button>
+            
+                                                    <button class="btn_custom blue" (click)="approveArtist(obj)" style="height: 35px; 
+                                            min-width: 90px;">Approve</button>
+                                                </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,269 @@
+<!-- <app-header></app-header> -->
+
+<header class="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg navbar-dark">
+                    <a href="https://bundles.finance/" class="logo">
+                        <span class="color_blue">bundles</span>
+                        <span class="color_white">finance</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                          
+                        </ul>
+                    </div>
+                    <div class="right_side_link">
+                        
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- if -----login false -->
+<div class="sub_header" *ngIf="login == false">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="sub_header_block">
+                    <h3>Bund Staking - <br /> NFT
+                    </h3>
+                    <p>Connect your wallet to get started.</p>
+                    <a href="javascript:;" (click)="connectToMetaMask()" class="call_to_action blue">Connect wallet
+                        <img src="./assets/images/right-arrow-white.svg" alt="" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- if login == true -->
+
+<div class="sub_header as_sub_header" *ngIf="login == true">
+    <div class="container">
+        <div class="row align-items-end">
+            <div class="col-lg-12 bg_breadcrumb">
+                <span class="bf_breadcrumb">
+                    <a  href="javascript:;" routerLink="/index">Bund Staking - NFT </a>
+                </span>
+            </div>
+            <div class="col-lg-5">
+                <div class="sub_header_block as_sub_header_block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>Balances (BUND)</h6>
+                        </div>
+                        <div class="col-md-5">
+                            <label>Wallet</label>
+                            <h4>{{balance}}</h4>
+                            <button data-toggle="modal" [attr.disabled]="balance == '0'?true:null"
+                                data-target="#approve_bundal" class="btn def_wt_btn">Approve</button>
+                        </div>
+                        <div class="col-md-7">
+                            <label>Approved</label>
+                            <h4>{{approved}}</h4>
+                            <button [attr.disabled]="approved == '0'?true:null" data-toggle="modal"
+                                data-target="#stake_modal" class="btn def_bl_btn">Stake</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="sub_header_block as_sub_header_block">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h6>Staked (BUND)</h6>
+                            <h3>{{staked}}</h3>
+                            <button [attr.disabled]="staked == '0'?true:null"
+                            data-toggle="modal" data-target="#withdraw_modal" class="btn def_wt_btn">Withdraw</button>
+                        </div>
+                        <div class="col-md-7">
+                            <h6>BUNDNFT Earned</h6>
+                            <h3>{{earned}}</h3>
+                            <button class="btn def_bl_btn" [attr.disabled]="earned == '0'?true:null"
+                            (click)="getReward()">Claim</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="innerbg">
+    <div class="container py_100">
+        <div class="row">
+            <div class="col-xl-3 mb-5">
+                <h2>NFT Marketplace</h2>
+                <a routerLink="/NFT-marketplace" href="javascript:;" class="btn btnmore">More</a>
+            </div>
+            <div class="col-xl-9">
+                <div class="row">
+                    <div class="col-xl-3 col-sm-6 mb-5">
+                        <div class="as_nft_bx">
+                            <img src="./assets/images/new2.png" class="img-fluid" alt="">
+                            <!-- <div class="as_in_nft_bx">
+                                <h6>Niblitron</h6>
+                                <h4>Niblitron #12</h4>
+                                <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                                <h5>Price: 0.01 BundNFT</h5>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 mb-5">
+                        <div class="as_nft_bx">
+                            <img src="./assets/images/new1.png" class="img-fluid" alt="">
+                            <!-- <div class="as_in_nft_bx">
+                                <h6>Unstoppable Domains</h6>
+                                <h4>eth2eth.crypto</h4>
+                                <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                                <h5>Price: 10 BundNFT</h5>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- <div class="col-xl-3 col-sm-6 mb-5">
+                        <div class="as_nft_bx">
+                            <img src="./assets/images/nft_img_03.jpg" class="img-fluid" alt="">
+                            <div class="as_in_nft_bx">
+                                <h6>Hashmasks</h6>
+                                <h4>Hashmasks #7944</h4>
+                                <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                                <h5>Price: 2.1111 BundNFT</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 mb-5">
+                        <div class="as_nft_bx">
+                            <img src="./assets/images/nft_img_04.jpg" class="img-fluid" alt="">
+                            <div class="as_in_nft_bx">
+                                <h6>Hashmasks</h6>
+                                <h4>Meth</h4>
+                                <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                                <h5>Price: 4.9984 BundNFT</h5>
+                            </div>
+                        </div>
+                    </div> -->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="approve_bundal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeApprove()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2>Approve BUND<br> from wallet</h2>
+                <form name="approveForm" [formGroup]="approveForm">
+                    <div class="custom_range">
+                        <p class="fs_16 color_blue">Add to approved BUND</p>
+                        <input type="number" class="form-control" formControlName="amount"
+                            (keyup)="checkApproveAmt($event)"
+                            [ngClass]="{ 'is-invalid': submitted1 && approveForm.controls.amount.errors }">
+                        <!-- <input type="range" class="custom-range" id="customRange" name="points1"> -->
+                        <div class="min_max_value">
+                            <span>Max</span>
+                            <span>{{balance}}</span>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <!-- <p class="fs_16 pt-5">A piece of description for the next step goes here.</p> -->
+                        <button (click)="onClickApprove()" class="btn_custom blue w-100">Approve
+                            {{approveForm.value.amount}} BUND</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="stake_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <p class="title"> <img src="./images/bitcoin.png" alt="">Bitcoin </p> -->
+                <h2>How much do you<br> want to stake?</h2>
+                <form name="stakeForm" [formGroup]="stakeForm">
+                    <div class="custom_range">
+                        <p class="fs_16 color_blue">Stake BUND</p>
+                        <input type="number" class="form-control" formControlName="amount"
+                            (keyup)="checkStakeAmt($event)"
+                            [ngClass]="{ 'is-invalid': submitted2 && stakeForm.controls.amount.errors }">
+                        <!-- <input type="range" class="custom-range" id="customRange" name="points1"> -->
+                        <div class="min_max_value">
+                            <span>Max</span>
+                            <span>{{approved}}</span>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <!-- <p class="fs_16 pt-5">A piece of description for the next step goes here.</p> -->
+                        <button (click)="onClickStack()" class="btn_custom blue w-100">Stake {{stakeForm.value.amount}}
+                            BUND</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="withdraw_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <p class="title"> <img src="./images/bitcoin.png" alt="">Bitcoin </p> -->
+                <h2>How much do you<br> want to withdraw?</h2>
+                <form name="withdrawForm" [formGroup]="withdrawForm">
+                    <div class="custom_range">
+                        <p class="fs_16 color_blue">Withdraw BUND</p>
+                        <input type="number" class="form-control" formControlName="amount"
+                            (keyup)="checkWithdrawAmt($event)"
+                            [ngClass]="{ 'is-invalid': submitted3 && withdrawForm.controls.amount.errors }">
+                        <!-- <input type="range" class="custom-range" id="customRange" name="points1"> -->
+                        <div class="min_max_value">
+                            <span>Max</span>
+                            <span>{{staked}}</span>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <!-- <p class="fs_16 pt-5">A piece of description for the next step goes here.</p> -->
+                        <button (click)="onClickWithDraw()" class="btn_custom blue w-100">Withdraw
+                            {{withdrawForm.value.amount}} BUND</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

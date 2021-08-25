@@ -1,0 +1,270 @@
+<header class="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg navbar-dark">
+                    <a href="https://bundles.finance/" class="logo">
+                        <span class="color_blue">bundles</span>
+                        <span class="color_white">finance</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                           
+                        </ul>
+                    </div>
+                    <div class="right_side_link">
+                    
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<!-- if login == false -->
+<div class="sub_header" *ngIf="login == false">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="sub_header_block">
+                    <h3>New Bund Reward<br /> Program
+                    </h3>
+                    <p>Connect your wallet to get started.</p>
+                    <a href="javascript:;" (click)="connectToMetaMask()" class="call_to_action blue">Connect wallet
+                        <img src="./assets/images/right-arrow-white.svg" alt="" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- if login == true -->
+<div class="sub_header" *ngIf="login == true">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="sub_header_block">
+                    <p class="title_small">Balances (BUND-ETH UNI-LP)</p>
+                    <div class="row balance_detail">
+                        <div class="col-md-6 col-6">
+                            <p>Wallet</p>
+                            <span>{{balance}}</span>
+                        </div>
+                        <div class="col-md-6 col-6">
+                            <p>Approved</p>
+                            <span>{{approved}}</span>
+                        </div>
+                    </div>
+                    <!-- <div class="row btn_wrap mt-3">
+                        <div class="col-md-6 col-6">
+                            <button class="btn_custom white" data-toggle="modal"
+                                [attr.disabled]="balance == '0'?true:null"
+                                data-target="#approve_bundal">Approve</button>
+                        </div>
+                        <div class="col-md-6 col-6">
+                            <button class="btn_custom blue" [attr.disabled]="approved == '0'?true:null"
+                                data-toggle="modal" data-target="#stake_modal">Stake</button>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="sub_header_block">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p class="title_small">Staked (BUND-ETH UNI-LP)</p>
+                            <p class="fs_48">{{staked}}</p>
+                            <button class="btn_custom white" [attr.disabled]="staked == '0'?true:null"
+                                data-toggle="modal" data-target="#withdraw_modal">Withdraw</button>
+                            <!-- <img class="ml-2" src="./assets/images/hourglass.svg" alt=""> -->
+                        </div>
+
+
+                        <div class="col-sm-6 mt-4 mt-sm-0">
+                            <p class="title_small">BUND earned</p>
+                            <p class="fs_48">{{earned}}</p>
+                            <button class="btn_custom blue " [attr.disabled]="earned == '0'?true:null"
+                                (click)="getReward()">Claim</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container py_100">
+    <div class="row">
+        <div class="col-lg-3">
+            <span class="bf_breadcrumb">
+                <a href="index">Deposit BUND-ETH-UNI-LP</a>
+            </span>
+            <h2>New Bund Reward Program</h2>
+            <!-- <p>A short line of description about the pool goes here in this space.</p> -->
+        </div>
+        <div class="col-lg-9 reward_detail">
+            <div class="reward_detail_title" *ngIf="login == true">
+                <p>Your&nbsp;earnings</p>
+                <span class="center_border"></span>
+                <a href="javascript:;" (click)="onClickRefresh()" class="refresh"><img
+                        src="./assets/images/icon-refresh.svg" alt=""></a>
+            </div>
+            <div class="row" *ngIf="login == true">
+                <div class="col-sm-4">
+                    <div class="reward_title">Hourly avg.</div>
+                    <div class="reward_amt">{{earnData.earnHour ? earnData.earnHour :0}}</div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="reward_title">Daily avg.</div>
+                    <div class="reward_amt">{{earnData.earnDay ? earnData.earnDay :0}}</div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="reward_title">Weekly avg.</div>
+                    <div class="reward_amt">{{earnData.earnWeek ? earnData.earnWeek :0}}</div>
+                </div>
+            </div>
+            <div class="reward_detail_title mt-4">
+                <p>Bundle&nbsp;reward&nbsp;details</p>
+                <span class="center_border"></span>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="reward_title">Total Stake</div>
+                    <div class="reward_amt">{{totalSupplyBalance}}</div>
+                </div>
+                <div class="col-sm-4" *ngIf="login == true">
+                    <div class="reward_title">Network Share</div>
+                    <div class="reward_amt">{{networkshare}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="reward_title">Hourly avg.</div>
+                    <div class="reward_amt">{{perHour ? perHour :0}}</div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="reward_title">Daily avg.</div>
+                    <div class="reward_amt">{{perDay ? perDay :0}}</div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="reward_title">Weekly avg.</div>
+                    <div class="reward_amt">{{perWeek ? perWeek: 0}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="approve_bundal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeApprove()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2>Approve BUND-ETH-LP<br> from wallet</h2>
+                <form name="approveForm" [formGroup]="approveForm">
+                    <div class="custom_range">
+                        <p class="fs_16 color_blue">Add to approved BUND-ETH-LP</p>
+                        <input type="number" class="form-control" formControlName="amount"
+                            (keyup)="checkApproveAmt($event)"
+                            [ngClass]="{ 'is-invalid': submitted1 && approveForm.controls.amount.errors }">
+                        <!-- <input type="range" class="custom-range" id="customRange" name="points1"> -->
+                        <div class="min_max_value">
+                            <span>Max</span>
+                            <span>{{balance}}</span>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <!-- <p class="fs_16 pt-5">A piece of description for the next step goes here.</p> -->
+                        <button (click)="onClickApprove()" class="btn_custom blue w-100">Approve
+                            {{approveForm.value.amount}} BUND-ETH-LP</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="stake_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <p class="title"> <img src="./images/bitcoin.png" alt="">Bitcoin </p> -->
+                <h2>How much do you<br> want to stake?</h2>
+                <form name="stakeForm" [formGroup]="stakeForm">
+                    <div class="custom_range">
+                        <p class="fs_16 color_blue">Stake BUND-ETH-LP</p>
+                        <input type="number" class="form-control" formControlName="amount"
+                            (keyup)="checkStakeAmt($event)"
+                            [ngClass]="{ 'is-invalid': submitted2 && stakeForm.controls.amount.errors }">
+                        <!-- <input type="range" class="custom-range" id="customRange" name="points1"> -->
+                        <div class="min_max_value">
+                            <span>Max</span>
+                            <span>{{approved}}</span>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <!-- <p class="fs_16 pt-5">A piece of description for the next step goes here.</p> -->
+                        <button (click)="onClickStack()" class="btn_custom blue w-100">Stake {{stakeForm.value.amount}}
+                            BUND-ETH-LP</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="withdraw_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <p class="title"> <img src="./images/bitcoin.png" alt="">Bitcoin </p> -->
+                <h2>How much do you<br> want to withdraw?</h2>
+                <form name="withdrawForm" [formGroup]="withdrawForm">
+                    <div class="custom_range">
+                        <p class="fs_16 color_blue">Withdraw BUND-ETH-LP</p>
+                        <input type="number" class="form-control" formControlName="amount"
+                            (keyup)="checkWithdrawAmt($event)"
+                            [ngClass]="{ 'is-invalid': submitted3 && withdrawForm.controls.amount.errors }">
+                        <!-- <input type="range" class="custom-range" id="customRange" name="points1"> -->
+                        <div class="min_max_value">
+                            <span>Max</span>
+                            <span>{{staked}}</span>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <!-- <p class="fs_16 pt-5">A piece of description for the next step goes here.</p> -->
+                        <button (click)="onClickWithDraw()" class="btn_custom blue w-100">Withdraw
+                            {{withdrawForm.value.amount}} BUND-ETH-LP</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

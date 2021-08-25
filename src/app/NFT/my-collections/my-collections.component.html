@@ -1,0 +1,232 @@
+<!--header-->
+<header class="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 d-flex justify-content-between align-items-center">
+
+                <a href="index" class="logo">
+                    <span class="color_blue">bundles</span>
+                    <span class="color_white">finance</span>
+                </a>
+                <div class="">
+
+
+                    <div class="dropdown nav-item">
+                        <a class="dropdown-toggle nav-link" href="#" role="button" id="basic-nav-dropdown"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="/NFT/account"><img src="./../../../assets/images/user.svg" alt=""></a>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="basic-nav-dropdown">
+                            <span class="pop-arrow"></span>
+                            <!-- <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/profile">Profile</a> -->
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center"
+                                routerLink="/NFT/marketplace">MarketPlace</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/my-collections">My
+                                Collections</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/account">Account</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!--contents-->
+<main>
+    <app-sidebar></app-sidebar>
+    <div class="bundles_contents_main">
+        <div class="d-flex align-items-center justify-content-between border-bottom py-2 mb-3">
+            <a routerLink="/NFT/marketplace" class="bundles_back" style="left: 279px;"><img
+                    src="../../../assets/images/back-arrow.svg" alt="" /></a>
+            <div class="f28-500 ">My Collections</div>
+            <a routerLink="/NFT/create" class="bundles_outlineblueBtn bundles_roundBtn">Create New</a>
+        </div>
+        <div class="d-flex align-items-center border-bottom bundles_tabs">
+            <button type="button" (click)="target('all')" [ngClass]="{'active':currentTab === 'all'}">All</button>
+            <button type="button" (click)="target('sale')" [ngClass]="{'active':currentTab === 'sale'}">On Sell</button>
+            <button type="button" (click)="target('auction')" [ngClass]="{'active':currentTab === 'auction'}">On
+                Auction</button>
+            <button type="button" (click)="target('created')"
+                [ngClass]="{'active':currentTab === 'created'}">Created</button>
+
+        </div>
+
+        <div class="tabs_panel mt-4"
+            *ngIf="currentTab === 'all' || currentTab === 'sale' || currentTab === 'auction' || currentTab === 'created'">
+            <div class="row">
+                <ng-container *ngFor="let obj of screenArray;">
+
+                    <div class="col-xl-3 col-sm-6 mb-5 my_clsn_bx">
+                        <a href="javascript:;" class="as_nft_bx" style="    cursor: default;">
+                            <div class="position-relative"><img style="width: 100%;height:255px;"
+                                src="{{obj && obj.nft_detail.nft_image ? obj.nft_detail.nft_image :'https://login.connect.realtor/7a8cbb7079d70bd64c469435a71b4db9.gif'}}"
+                                class="img-fluid w-100" alt=""/>
+                                <h5 class="saleTag" *ngIf="obj.NFTAuctionCount != 0"><span class="badge badge-primary">Auction</span></h5>
+                                <h5 class="saleTagleft" *ngIf="obj.NFTSaleCount != 0"><span class="badge badge-info">Sale</span></h5>
+
+                            </div>
+                            <div class="as_in_nft_bx">
+                                <!-- <h6>ID :{{obj && obj.index ? obj.index :'0'}}</h6> -->
+
+                                <div class="d-flex d-flex justify-content-between">
+
+                                    <h6>ID : {{obj && obj.index ? obj.index :'0'}}</h6>
+                                    <!--  -->
+                                    <h6 *ngIf="obj.NFTAuctionCount != 0">On Auction : {{obj && obj.NFTAuctionCount ?
+                                        obj.NFTAuctionCount :'0'}}</h6>
+                                    <!--  -->
+                                    <h6 *ngIf="obj.NFTSaleCount != 0">On Sale : {{obj && obj.NFTSaleCount ?
+                                        obj.NFTSaleCount :'0'}}</h6>
+
+                                    <!-- <div class="col-md-6 justify-content-end text-align-right">
+                                        <img style="max-width: 65px;  max-height: 65px;" src="../../../assets/images/NFTs/sale.png" />
+                                    </div> -->
+
+                                </div>
+
+                                <h4>{{obj && obj.nft_detail.nft_name ? obj.nft_detail.nft_name :'--'}}</h4>
+                                <p>{{obj && obj.nft_detail.nft_desc ? obj.nft_detail.nft_desc :'--'}}</p>
+                                <h5 *ngIf="obj.price && obj.nft_detail.nft_isSelf == '0'">Price: {{obj && obj.price ?
+                                    obj.price :'-'}} BundNFT</h5>
+                                <h5 *ngIf="!obj.price &&  obj.nft_detail.nft_isSelf == '1'" class="mb-2">Artist NFT</h5>
+
+                                <div class="d-flex justify-content-center">
+                                    <button class="btn_h40 bundles_blueBtn  mr-3" *ngIf="obj.purchased != 0 "
+                                        type="button" (click)="onClickRoute('sale',obj)"> Sell</button>
+                                    <button class="btn_h40 bundles_outlineblueBtn  mr-5" type="button"
+                                        (click)="onClickRoute('view',obj)">View</button>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+
+                </ng-container>
+
+            </div>
+
+            <div class="row text-align-center justify-content-center" *ngIf="screenArray && !screenArray.length">
+                <div class="bundles_connectBox text-center">
+                    <div class="f28-400 mb-4">You need to Add some <br />
+                        NFTs From Marketplace.</div>
+
+                    <div class="mb-3">
+                        <a href="/NFT/marketplace" class="bundles_blueBtn mb-2">Explore Marketplace </a>
+                    </div>
+                    <div class="mb-3">
+                        <!-- <button type="button" class="bundles_bluelinkBtn">Use a different wallet</button> -->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<!--footer-->
+<footer>
+    <div class="container">
+        <h3 class="mt-5">Links</h3>
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDefi" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Announcements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDiscussion" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Discussion </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://medium.com/@bundles.finance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Medium</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/BundlesFinance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/twitter.png" alt=""></span>
+                            <span class="label">Twitter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.coingecko.com/en/coins/bundles" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coingecko.webp" alt=""></span>
+                            <span class="label">CoinGecko</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://coinmarketcap.com/currencies/bundles/" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coinmarketcap.png" alt=""></span>
+                            <span class="label">CoinMarketCap</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://app.uniswap.org/#/swap?inputCurrency=0x8d3e855f3f55109d473735ab76f753218400fe96"
+                            target="_blank">
+                            <span class="icon"><img src="../../assets/images/uniswap.png" alt=""></span>
+                            <span class="label">Uniswap</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://bit.ly/2MxOsWC" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Tokenomics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/channel/UC9mrNsIf11EJ7oIkaDuX9FQ" target="_blank">
+                            <span class="icon"><img src="../../assets/images/youtube.jpeg" alt=""></span>
+                            <span class="label">Join our channel</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<div class="modal fade" id="sale_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <h2>Choose from the following?</h2>
+
+                <a href="javascript:;" (click)="onClickInSideRoute('sale')" class="call_to_action blueBtn">By Sale
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+                <a (click)="onClickInSideRoute('auction')" href="javascript:;" class="call_to_action blueBtn">By Auction
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>

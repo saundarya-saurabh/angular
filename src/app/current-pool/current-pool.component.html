@@ -1,0 +1,87 @@
+<app-header></app-header>
+
+<div class="sub_header" *ngIf="login == true">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 v_bottom">
+                <span class="bf_breadcrumb">
+                    <a href="bundle-asset">Performance</a>
+                </span>
+                <h2 class="color_white mb-4">Current Pool</h2>
+            </div>
+            <div class="col-lg-3">
+                <div class="sub_header_block">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row balance_detail mt-0">
+                                <div class="col-lg-12">
+                                    <p>Bundle ID</p>
+                                    <span>Low risk {{bundleId }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <p class="title_small brd_top mt-4 pt-4">Next stake starts in</p>
+                            <div class="timer_wrap">
+                                <div class="timer">{{ nextOppOccures.day ? nextOppOccures.day : 0}}:
+                                    {{ nextOppOccures.hour ? nextOppOccures.hour : 0}}: {{ nextOppOccures.min ?
+                                    nextOppOccures.min : 0}} </div>
+                                <div class="timer_unit">
+                                    <span>DAYS</span>
+                                    <span>HRS</span>
+                                    <span>MINS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="sub_header" *ngIf="login == false">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="sub_header_block">
+                    <h3>Use your crypto-prediction<br /> skills to earn APY.</h3>
+                    <p>Connect your wallet to get started.</p>
+                    <a href="javascript:;" (click)="connectToMetaMask()" class="call_to_action">Connect Wallet
+                        <img src="./assets/images/right-arrow.svg" alt="" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container py_50">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="table-responsive">
+                <table class="table_data">
+                    <tr>
+                        <th>Token</th>
+                        <th>Coin&nbsp;price</th>
+                        <th>Performed</th>
+                        <th>BUND&nbsp;staked</th>
+                    </tr>
+                    <tr *ngFor="let item of completedarray;let i = index">
+                        <td class="token"><img src="{{item.coinLogo[i]}}" alt="">{{item && item.coinName ?
+                            item.coinName[i] : '-'}}</td>
+                        <td>${{item && item.coinPrice ? (item.coinPrice[i] | number:'1.1-4') : '-'}}</td>
+                        <td [ngClass]="item.performance[i] < 0 ? 'color_red' : 'color_green'">{{item && item.performance[i] ? (item.performance[i]| number:'1.1-4'):
+                            '0'}}</td>
+                        <td>{{item && item.balance[i] ? item.balance[i] : '0'}}</td>
+                    </tr>
+                    <tr *ngIf="completedarray.length == 0 ">
+                        <td colspan="4">No records found</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

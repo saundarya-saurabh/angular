@@ -1,0 +1,25 @@
+
+
+<!-- ----------------------main -->
+<body class="hall_of_flame_bg_rings">
+    <app-header *ngIf="id == '1'"></app-header>
+    <app-header1 *ngIf="id == '2'"></app-header1>
+
+    <div class="container-fluid hall_of_flame">
+
+        <div class="hall_of_flame_content">
+            <span class="bf_breadcrumb">
+                                <!-- <a href="javascript:;">All-time leaderboard</a> -->
+
+            </span>
+            <h2 class="color_white">Hall of Fame</h2>
+
+                <div class="hall_of_flame_block" *ngFor="let item of hallOfFameArray;let i = index">
+                    <p>{{item.bundleId ? item.bundleId : '0'}}</p>
+                    <div class="username">{{ item.username ? item.username : "--"}}</div>
+                </div>
+          
+        </div>
+
+    </div>
+</body>

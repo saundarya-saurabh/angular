@@ -1,0 +1,374 @@
+<!--header-->
+<header class="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 d-flex justify-content-between align-items-center">
+                <a href="index" class="logo">
+                    <span class="color_blue">bundles</span>
+                    <span class="color_white">finance</span>
+                </a>
+                <div class="">
+
+
+                    <div class="dropdown nav-item">
+                        <a class="dropdown-toggle nav-link" href="#" role="button" id="basic-nav-dropdown"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="/NFT/account"><img src="./../../../assets/images/user.svg" alt=""></a>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="basic-nav-dropdown">
+                            <span class="pop-arrow"></span>
+                            <!-- <div class="dropdown-divider" role="separator"></div>
+                                <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/profile">Profile</a> -->
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center"
+                                routerLink="/NFT/marketplace">MarketPlace</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/my-collections">My
+                                Collections</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/account">Account</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!--contents-->
+<main>
+    <app-sidebar></app-sidebar>
+    <div class="bundles_contents_main">
+        <div class="d-flex align-items-center justify-content-between border-bottom py-2 mb-3">
+            <div class="pl-4">
+                <span class="bf_breadcrumb crate_arrw d-flex">
+                    <a href="javascript:;" class="f28-500">Create new
+                        item</a>( {{(ownerAccount == userAccount) ? 'as Admin' : 'as Artist' }})
+                </span>
+            </div>
+        </div>
+        <div class="row pt-4">
+            <div class="col-md-8">
+
+                <form class="create_form" name="NFTForm" [formGroup]="NFTForm">
+                    <div class="form-group">
+                        <!-- <label> </label> -->
+                        <!-- <label>Name </label> -->
+                    </div>
+                    <div class="form-group">
+                        <label class="heiglt_txt">Image or GIF</label>
+                        <p class="info_txt">File types supported:JPG, JPEG, PNG, GIF,SVG,
+                            <!--  MP4, WEBM, MP3, WAV, OGG, GLB,GLTF. -->
+                            Max size: 10 MB
+                        </p>
+                        <div class="slr_upload_bx p-4 d-flex align-items-center justify-content-center">
+                            <div class="" *ngIf="!url">
+                                <img src="./assets/images/add.png" class="addImage" alt="" />
+                                <div class="px-2 py-1 mt-3 drag_txt">Drag & drop file</div>
+                                <div class="browse_txt">or <span>media on your device</span> </div>
+                            </div>
+                            <img *ngIf="url" src="{{url}}" class="doc" alt="" />
+                            <!-- <h2 *ngIf="url">Document uploaded successfully</h2> -->
+                            <input #fileInput type='file' accept="image/ .gif, .jpg, .png" class="form-control"
+                                title=" " (change)="onSelectFile($event)">
+                        </div>
+                    </div>
+
+                    <!-- nft_name -->
+                    <div class="form-group">
+                        <label>Name *</label>
+                        <input type="text" formControlName="nft_name"
+                            [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_name.errors }"
+                            class="form-control form-control-lg" placeholder="Item Name">
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_name.errors">
+                            <span *ngIf="NFTForm.controls.nft_name.errors?.required">This field is required.</span>
+
+                        </div>
+                    </div>
+                    <!-- nft_ext_link -->
+                    <!-- <div class="form-group">
+                        <label>External Link</label>
+                        <p class="info_txt">bundle.finance will include a link to this URL on this item's detail page,
+                            so that users can click to learn more about it. <br>You are welcome to link to your own
+                            webpage with more details.</p>
+                        <input type="text" class="form-control form-control-lg" formControlName="nft_ext_link"
+                            [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_ext_link.errors }"
+                            class="form-control form-control-lg" placeholder="https://yoursite.io/item/123">
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_ext_link.errors">
+                            <span *ngIf="NFTForm.controls.nft_ext_link.errors?.required">This field is required.</span>
+
+                        </div>
+                    </div> -->
+                    <!-- nft_desc -->
+                    <div class="form-group">
+                        <label>Description *</label>
+                        <p class="info_txt">The description will be included on the item's detail page underneath its
+                            image.</p>
+                        <input type="text" class="form-control form-control-lg" formControlName="nft_desc"
+                            [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_desc.errors }"
+                            placeholder="Provide a detailed description of your item.">
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_desc.errors">
+                            <span *ngIf="NFTForm.controls.nft_desc.errors?.required">This field is required.</span>
+
+                        </div>
+                    </div>
+                    <!-- nft_copies -->
+                    <div class="form-group">
+                        <label>Supply *
+                            <!-- <i class="info_icn"></i> -->
+                        </label>
+                        <p class="info_txt">Maximum number of copies that will be minted.</p>
+                        <input type="number" formControlName="nft_copies"
+                            [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_copies.errors }"
+                            class="form-control form-control-lg" placeholder="1">
+
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_copies.errors">
+                            <span *ngIf="NFTForm.controls.nft_copies.errors?.required">This field is required.</span>
+                        </div>
+                    </div>
+                    <!-- nft_IsSelf -->
+                    <div class="form-group" *ngIf="userAccount == ownerAccount">
+                        <label> Create for Self/Plateform *</label>
+                        <!-- Platform = 1 -->
+                        <p class="info_txt">Creating NFT for self or Platform ?</p>
+                        <label class="d-inline-flex align-items-center">
+                            <input type="radio" formControlName="nft_isSelf" (click)="onClickRadio('self')"
+                                [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_isSelf.errors }"
+                                class="nft_radio" value="1"> Self
+                        </label>
+                        <!-- Platform = 0 -->
+                        <label class="ml-2 d-inline-flex align-items-center">
+                            <input type="radio" formControlName="nft_isSelf" (click)="onClickRadio('platform')"
+                                [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_isSelf.errors }"
+                                class="nft_radio" value="0"> Platform</label>
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_isSelf.errors">
+                            <span *ngIf="NFTForm.controls.nft_isSelf.errors?.required">This field is required.</span>
+                        </div>
+                    </div>
+                    <!-- nft_price -->
+                    <div class="form-group" *ngIf="userAccount == ownerAccount && NFTForm.value.nft_isSelf == '0'">
+                        <label>Price *</label>
+                        <p class="info_txt">The price of copies that can be counted in BUNDNFT.</p>
+                        <input type="number" formControlName="nft_price"
+                            [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_price.errors }"
+                            class="form-control form-control-lg" placeholder="1">
+
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_price.errors">
+                            <span *ngIf="NFTForm.controls.nft_price.errors?.required">This field is required.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Links</label>
+                        <!-- nft_website_link -->
+                        <div class="input-group ">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="yrsite_icn"></i></div>
+                            </div>
+                            <input type="text" formControlName="nft_website_link"
+                                [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_website_link.errors }"
+                                class="form-control form-control-lg" placeholder="https://yoursite.io">
+
+
+                        </div>
+
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_website_link.errors">
+                            <span *ngIf="NFTForm.controls.nft_website_link.errors?.pattern">
+                                Please enter valid link.</span>
+                        </div>
+                        <!-- nft_discord_link -->
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="discrd_icn"></i></div>
+                            </div>
+                            <input type="text" formControlName="nft_discord_link"
+                                [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_discord_link.errors }"
+                                class="form-control form-control-lg" placeholder="https://discord.com/YourUserId">
+                        </div>
+
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_discord_link.errors">
+                            <span *ngIf="NFTForm.controls.nft_discord_link.errors?.pattern">
+                                Please enter valid link.</span>
+                        </div>
+                        <!-- nft_twitter_link -->
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="twitter_icn"></i></div>
+                            </div>
+                            <input type="text" formControlName="nft_twitter_link"
+                                [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_twitter_link.errors }"
+                                class="form-control form-control-lg" placeholder="https://twitter.com/YourUserId">
+
+
+                        </div>
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_twitter_link.errors">
+
+                            <span *ngIf="NFTForm.controls.nft_twitter_link.errors?.pattern">
+                                Please enter valid link.</span>
+                        </div>
+
+                        <!-- nft_instagram_link -->
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="insta_icn"></i></div>
+                            </div>
+                            <input type="text" formControlName="nft_instagram_link"
+                                [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_instagram_link.errors }"
+                                class="form-control form-control-lg" placeholder="https://instagram.com/YourUserId">
+
+                        </div>
+
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_instagram_link.errors">
+
+                            <span *ngIf="NFTForm.controls.nft_instagram_link.errors?.pattern">
+                                Please enter valid link.</span>
+                        </div>
+                        <!-- nft_medium_link -->
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="medium_icn"></i></div>
+                            </div>
+                            <input type="text" formControlName="nft_medium_link"
+                                [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_medium_link.errors }"
+                                class="form-control form-control-lg" placeholder="https://medium.com/YourUserId">
+
+
+                        </div>
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_medium_link.errors">
+
+                            <span *ngIf="NFTForm.controls.nft_medium_link.errors?.pattern">
+                                Please enter valid link.</span>
+                        </div>
+                        <!-- nft_telegram_link -->
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="telegrm_icn"></i></div>
+                            </div>
+                            <input type="text" formControlName="nft_telegram_link"
+                                [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_telegram_link.errors }"
+                                class="form-control form-control-lg" placeholder="https://t.me/YourUserId">
+                        </div>
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_telegram_link.errors">
+
+                            <span *ngIf="NFTForm.controls.nft_telegram_link.errors?.pattern">
+                                Please enter valid link.</span>
+                        </div>
+
+                    </div>
+                    <!-- nft_fee  -->
+                    <div class="form-group">
+                        <label>Royalty fee (The royalty fee will be earned every time this specific NFT will be
+                            sold.)*</label>
+                        <input type="number" formControlName="nft_fee"
+                            [ngClass]="{ 'is-invalid': submitted1 && NFTForm.controls.nft_fee.errors }"
+                            class="form-control form-control-lg" placeholder="0.00">
+                        <div class="fridge-err" *ngIf="submitted1 && NFTForm.controls.nft_fee.errors">
+                            <span *ngIf="NFTForm.controls.nft_fee.errors?.required">This field is
+                                required.</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+
+                        <p class="info_txt" style=" font-size: 19px;"> <b style="color: red;">Warning - </b> <b>All
+                                information mentioned in the form, including Social Media handles cannot be changed
+                                later on.</b>
+                        </p>
+                        <!-- <div class="auth_editr d-flex align-items-center">
+                            <img src="./../../../assets/images/userbig.svg" alt="user" />
+                            <p>YOU <span>(0xbebd...789b)</span></p>
+                        </div> -->
+                    </div>
+
+                    <div class="form-group text-align-center text-center">
+
+                        <label class="d-inline-flex align-items-center" style="font-size: 20px;">
+                            <input type="checkbox"  class="nft_radio" (click)="onClickAgree($event)"> I agree.
+                        </label>
+
+                    </div>
+                    <div class="text-center pt-3">
+                        <button class="bundles_blueBtn px-5 min-width-230" type="button"
+                            [attr.disabled]="agreed ? null :true" (click)="onclickSubmit()">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!--footer-->
+<footer>
+    <div class="container">
+        <h3 class="mt-5">Links</h3>
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDefi" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Announcements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDiscussion" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Discussion </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://medium.com/@bundles.finance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Medium</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/BundlesFinance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/twitter.png" alt=""></span>
+                            <span class="label">Twitter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.coingecko.com/en/coins/bundles" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coingecko.webp" alt=""></span>
+                            <span class="label">CoinGecko</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://coinmarketcap.com/currencies/bundles/" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coinmarketcap.png" alt=""></span>
+                            <span class="label">CoinMarketCap</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://app.uniswap.org/#/swap?inputCurrency=0x8d3e855f3f55109d473735ab76f753218400fe96"
+                            target="_blank">
+                            <span class="icon"><img src="../../assets/images/uniswap.png" alt=""></span>
+                            <span class="label">Uniswap</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://bit.ly/2MxOsWC" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Tokenomics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/channel/UC9mrNsIf11EJ7oIkaDuX9FQ" target="_blank">
+                            <span class="icon"><img src="../../assets/images/youtube.jpeg" alt=""></span>
+                            <span class="label">Join our channel</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>

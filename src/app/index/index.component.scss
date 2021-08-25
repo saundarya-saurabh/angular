@@ -1,0 +1,31 @@
+.blueBtn{
+    margin-bottom: 50px;
+    background: #ffffff;
+    color: #212121;
+    
+    &:hover{
+        background: #5454FF;
+        color: #ffffff;
+        img{
+            filter: invert(1);
+        }
+    }
+}
+.modal-content{
+    background: #f1f1f1;
+}
+
+
+// .whiteBtn{
+//     margin-bottom: 50px;
+//     background: #5454FF;
+//     color: #212121;
+    
+//     &:hover{
+//         background: #ffffff;
+//         color: #212121;
+//         img{
+//             // filter: invert(1);
+//         }
+//     }
+// }

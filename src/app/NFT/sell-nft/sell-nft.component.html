@@ -1,0 +1,492 @@
+<!--header-->
+<header class="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 d-flex justify-content-between align-items-center">
+                <a href="index" class="logo">
+                    <span class="color_blue">bundles</span>
+                    <span class="color_white">finance</span>
+                </a>
+                <div class="">
+
+
+                    <div class="dropdown nav-item">
+                        <a class="dropdown-toggle nav-link" href="#" role="button" id="basic-nav-dropdown"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="/NFT/account"><img src="./../../../assets/images/user.svg" alt=""></a>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="basic-nav-dropdown">
+                            <span class="pop-arrow"></span>
+                            <!-- <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/profile">Profile</a> -->
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center"
+                                routerLink="/NFT/marketplace">MarketPlace</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/my-collections">My
+                                Collections</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/account">Account</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!--contents-->
+<div class="container">
+    <div class="d-flex bundles_sellhdr">
+        <a routerLink="/NFT/my-collections" class="bundles_back"><img src="../../../assets/images/back-arrow.svg"
+                alt="" /></a>
+        <img src="{{tokenData && tokenData.nft_detail.nft_image ? tokenData.nft_detail.nft_image :'./../../../assets/images/item.png'}}"
+            alt="" class="img" />
+        <div class="pl-2 pl-md-4">
+            <div class="fs_14 color_blue">ID: {{tokenData && tokenData.index ? tokenData.index
+                :'0'}}</div>
+            <div class="f24-600">{{tokenData && tokenData.nft_detail.nft_name ? tokenData.nft_detail.nft_name
+                :''}}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 pb-2">
+            <div class="f18-500">Select your selling method</div>
+        </div>
+        <div class="col-lg-8">
+            <div class="bg-white h-100">
+                <ul class="list-unstyled m-0 d-flex text-center bundlesTabs2">
+                    <li (click)="target('Sell')" [ngClass]="{'active':currentTab === 'Sell'}">
+                        <div class="f18-600">Set Price</div>
+                        <div class="fs_14 opacity50">Sell at a fixed price</div>
+                    </li>
+                    <li (click)="target('Auction')" [ngClass]="{'active':currentTab === 'Auction'}">
+                        <div class="f18-600">Highest Bid</div>
+                        <div class="fs_14 opacity50">Auction to the highest bidder</div>
+                    </li>
+                </ul>
+                <div class="p-4" *ngIf="currentTab === 'Sell'">
+                    <form name="sellForm" [formGroup]="sellForm">
+                        <div class="row justify-content-between">
+                            <div class="col-md-6">
+                                <div class="f18-600">Price(per NFT)</div>
+                                <div class="fs_14 opacity50">Once confirmed, token will be transferred to platform.
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class=" bundles_dropdown_input">
+                                    <!-- <div class="dropdown"> -->
+                                    <button class="btn " type="button">
+                                        <img src="./../../../assets/images/eth2.png" alt="" /> ETH
+                                    </button>
+                                    <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                        <a class="dropdown-item"><img src="./../../../assets/images/eth2.png" alt="" />
+                                            ETH</a>
+                                    </div> -->
+                                    <!-- </div> -->
+                                    <input type="number" (keyup)="onKeyUpPrice($event,'sale')"
+                                        [ngClass]="{ 'is-invalid': submitted2 && sellForm.controls.price.errors }"
+                                        formControlName="price" />
+
+
+                                </div>
+                                <div class="fridge-err" *ngIf="submitted2 && sellForm.controls.price.errors">
+                                    <span *ngIf="sellForm.controls.price.errors?.required">This field is
+                                        required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="bundles_hr" />
+                        <!-- <div class="row justify-content-between align-items-center">
+                        <div class="col-md-6">
+                            <div class="f18-600">Duration</div>
+                        </div>
+                        <div class="col-md-6">
+                            <select class="bundles_selectbox">
+                                <option value="">Duration</option>
+                                <option value="">Duration</option>
+                            </select>
+                        </div>
+                    </div> -->
+                        <hr class="bundles_hr" />
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-md-6">
+                                <div class="f18-600">Quantity</div>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" (keyup)="onKeyUpSellAMT($event)" style="width: 290px;"
+                                    [ngClass]="{ 'is-invalid': submitted2 && sellForm.controls.amount.errors }"
+                                    formControlName="amount" class="bundles_inputbox" />
+                                <div class="fridge-err" *ngIf="submitted2 && sellForm.controls.amount.errors">
+                                    <span *ngIf="sellForm.controls.amount.errors?.required">This field is
+                                        required.</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="p-4" *ngIf="currentTab === 'Auction'">
+                    <form name="auctionForm" [formGroup]="auctionForm">
+
+                        <div class="row justify-content-between">
+                            <div class="col-md-6">
+                                <div class="f18-600">Minimum Bid</div>
+                                <div class="fs_14 "><span class="opacity50">Set your starting bid price. </span>
+                                   
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class=" bundles_dropdown_input">
+                                    <div class="dropdown">
+                                        <button class="btn " type="button">
+                                            <img src="./../../../assets/images/eth2.png" alt="" /> ETH
+                                        </button>
+
+                                    </div>
+
+                                    <input type="number" (keyup)="onKeyUpPrice($event,'auction')"
+                                        [ngClass]="{ 'is-invalid': submitted3 && auctionForm.controls.price.errors }"
+                                        formControlName="price">
+                                </div>
+
+                                <div class="fridge-err" *ngIf="submitted3 && auctionForm.controls.price.errors">
+                                    <span *ngIf="auctionForm.controls.price.errors?.required">This field is
+                                        required.</span>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="bundles_hr" />
+                        <div class="row justify-content-between">
+                            <div class="col-md-6">
+                                <div class="f18-600">End date</div>
+                                <div class="fs_14 opacity50">Your auction will automatically end at this time and the
+                                    highest bidder will win & token will be transferred to Highest bidder.
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- <select class="bundles_selectbox mt-3" style="width: 290px;"
+                                    [ngClass]="{ 'is-invalid': submitted3 && auctionForm.controls.duration.errors }"
+                                    formControlName="duration">
+                                    <option value="1">for 1 Day</option>
+                                    <option value="2">for 2 Days</option>
+                                    <option value="3">for 3 Days</option>
+                                    <option value="4">for 4 Days</option>
+                                    <option value="5">for 5 Days</option>
+
+                                </select> -->
+                                <input [owlDateTime]="dt1" [min]="min" class="bundles_inputbox"
+                                    (dateTimeInput)="onChangeDate($event)" [owlDateTimeTrigger]="dt1"
+                                    [ngClass]="{ 'is-invalid': submitted3 && auctionForm.controls.duration.errors }"
+                                    formControlName="duration" placeholder="End Date &Time" style="width: 290px;">
+                                <owl-date-time #dt1></owl-date-time>
+                                <div class="fridge-err" *ngIf="submitted3 && auctionForm.controls.duration.errors">
+                                    <span *ngIf="auctionForm.controls.duration.errors?.required">This field is
+                                        required.</span>
+
+                                </div>
+                            </div>
+
+                            <div class="col-12 d-flex f18-600 justify-content-center"
+                                *ngIf="showTimeLine && showTimeLine != ''" style="color: red;">
+                                Auction will run for {{showTimeLine && showTimeLine != '' ? showTimeLine : '0'}}.
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="bg-white h-100">
+                <div class="f18-500 p-4 bundles_border_bottom">Summary</div>
+                <div class="p-4" *ngIf="currentTab === 'Sell'">
+                    <div class="f18-600">Listing</div>
+                    <!-- <div class="fs_14 color_blue pb-4">Your item will be listed for Ξ100.</div> -->
+
+
+
+                    <br />
+                    <button class="bundles_outlineblueBtn" type="button" (click)="onClickApproveSell()">
+                        {{tokenData.isApprove ? 'Remove Operator' : 'Approve Operator'}}</button>
+                    <hr class="bundles_hr" />
+                    <div class="f18-600">Fees (per NFT)</div>
+                    <div class="fs_14 pb-4">Listing is free! At the time of the sale, the following fees
+                        will be deducted.</div>
+
+                    <div class="row pb-2">
+                        <div class="col-8">
+                            <div class="f16-500 color_lightGray">To bundle.finance ({{showObj.fees ?
+                                showObj.fees : 0}}%)</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="f16-500 color_lightGray">
+                                {{showFees &&
+                                showFees.platFormFees ? showFees.platFormFees
+                                :'0'}}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-2">
+                        <div class="col-8">
+                            <div class="f16-500 color_lightGray">To NFT creator ({{tokenData &&
+                                tokenData.nft_detail.nft_fee ? tokenData.nft_detail.nft_fee
+                                :'0'}}%)</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="f16-500 color_lightGray">
+                                {{showFees &&
+                                    showFees.creatorFees ? showFees.creatorFees
+                                    :'0'}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-2">
+                        <div class="col-8">
+                            <div class="f16-500 color_lightGray">Total ({{showObj.fees && tokenData.nft_detail.nft_fee ? (showObj.fees +
+                                tokenData.nft_detail.nft_fee) : 0}}%)</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="f16-500 color_lightGray">
+                                {{showFees &&
+                                    showFees.totalFees ? showFees.totalFees
+                                    :'0'}}
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button [attr.disabled]="tokenData.isApprove == true ? null : true" class="bundles_blueBtn mb-2"
+                        (click)="onClickSubmitSell()">Post Your
+                        Listing</button>
+                    <div class="fs_14 color_lightGray" style="color:red;">NOTE:
+                        <span style="color:red;">- Creator fees will not deducted from the NFT Creator.</span>
+                    </div>
+
+                </div>
+                <div class="p-4" *ngIf="currentTab === 'Auction'">
+                    <div class="f18-600">Listing</div>
+                    <div class="fs_14 color_blue pb-4">Your item will be auctioned.</div>
+
+                    <button class="bundles_outlineblueBtn" type="button" (click)="onClickApproveSell()">
+                        {{tokenData.isApprove ? 'Remove Operator' : 'Approve Operator'}}</button>
+                    <hr class="bundles_hr" />
+
+
+                    <div class="f18-600">Fees (per NFT)</div>
+                    <div class="row pb-2">
+                        <div class="col-7">
+                            <div class="f16-500 color_lightGray">To bundle.finance ({{showObj.fees ?
+                                showObj.fees : 0}}%)</div>
+                        </div>
+                        <div class="col-5">
+                            <div class="f16-500 color_lightGray">
+                                {{showFees &&
+                                showFees.platFormFees ? showFees.platFormFees
+                                :'0'}}
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-2">
+                        <div class="col-7">
+                            <div class="f16-500 color_lightGray">To NFT creator ({{tokenData &&
+                                tokenData.nft_detail.nft_fee ? tokenData.nft_detail.nft_fee
+                                :'0'}}%)</div>
+                        </div>
+                        <div class="col-5">
+                            <div class="f16-500 color_lightGray">
+                                {{showFees &&
+                                    showFees.creatorFees ? showFees.creatorFees
+                                    :'0'}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-2">
+                        <div class="col-7">
+                            <div class="f16-500 color_lightGray">Total ({{showObj.fees && tokenData.nft_detail.nft_fee ? (showObj.fees +
+                                tokenData.nft_detail.nft_fee) : 0}}%)</div>
+                        </div>
+                        <div class="col-5">
+                            <div class="f16-500 color_lightGray">
+                                {{showFees &&
+                                    showFees.totalFees ? showFees.totalFees
+                                    :'0'}}
+
+                            </div>
+                        </div>
+                    </div>
+                    <button [attr.disabled]="tokenData.isApprove == true ? null : true" class="bundles_blueBtn mb-2"
+                        (click)="onClickSubmitAuction()">Post Your
+                        Listing</button>
+                    <div class="fs_14 color_lightGray" style="color:red;">NOTE:
+                        <span style="color:red;">- Creator fees will not deducted from the NFT Creator.</span>
+                    </div>
+                    <br />
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div class="col-lg-8">
+            <div class="f18-500">Instructions</div>
+            <div class="fs_14">For Sale:
+                You can set single or multiple NFT(s) for direct sale.
+                Set price for each NFT and quantity you wish to put for sale.
+                <br>
+                For Auction:
+                You can set a single NFT for auction.
+                Set a start price and auction end date/time.
+                <br>
+                <b>You will need to approve the platform for using either feature.</b>
+                </div>
+        </div>
+    </div>
+</div>
+<!--footer-->
+<footer>
+    <div class="container">
+        <h3 class="mt-5">Links</h3>
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDefi" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Announcements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDiscussion" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Discussion </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://medium.com/@bundles.finance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Medium</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/BundlesFinance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/twitter.png" alt=""></span>
+                            <span class="label">Twitter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.coingecko.com/en/coins/bundles" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coingecko.webp" alt=""></span>
+                            <span class="label">CoinGecko</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://coinmarketcap.com/currencies/bundles/" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coinmarketcap.png" alt=""></span>
+                            <span class="label">CoinMarketCap</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://app.uniswap.org/#/swap?inputCurrency=0x8d3e855f3f55109d473735ab76f753218400fe96"
+                            target="_blank">
+                            <span class="icon"><img src="../../assets/images/uniswap.png" alt=""></span>
+                            <span class="label">Uniswap</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://bit.ly/2MxOsWC" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Tokenomics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/channel/UC9mrNsIf11EJ7oIkaDuX9FQ" target="_blank">
+                            <span class="icon"><img src="../../assets/images/youtube.jpeg" alt=""></span>
+                            <span class="label">Join our channel</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- <button type="button" data-toggle="modal" data-target="#checkoutmodal" class="bundles_blueBtn">Checkout</button> -->
+<!--checkout-->
+<div class="modal fade" id="checkoutmodal" tabindex="-1" role="dialog" aria-labelledby="checkoutmodalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <div class="fs_46 font-weight-bold text-center mb-3">Checkout</div>
+                <div class="alert alert-warning" role="alert">
+                    This item has not been reviewed by Bundle.finance.
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div class="f18-600">Item</div>
+                    <div class="f18-600">Subtotal</div>
+                </div>
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col-md-8 d-flex bundles_sellhdr m-0">
+                        <img src="./../../../assets/images/item.png" alt="" class="img" />
+                        <div class="pl-2 pl-md-4">
+                            <div class="fs_14 color_blue">HOOMAN'S LUXURY COLLECTIONS</div>
+                            <div class="f24-600">Wizardry #2/7</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="f18-600 text-right">0.076</div>
+                        <div class="fs_16 color_gray text-right">($296.73)</div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="f18-600">Total</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="f18-600 text-right color_blue">0.076</div>
+                        <div class="fs_16 color_gray text-right">($296.73)</div>
+                    </div>
+                </div>
+                <hr />
+                <label class="bundles_checkbox fs_16 color_gray">
+                    By checking this box, I acknowledge that this item has not been reviewed or approved by
+                    Bundles.finance.
+                    <input type="checkbox" />
+                    <span class="checkmark">
+                    </span>
+                </label>
+                <label class="bundles_checkbox fs_16 color_gray">
+                    By checking this box, I agree to Bundles.finance's Term of Service.
+                    <input type="checkbox" />
+                    <span class="checkmark">
+                    </span>
+                </label>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="bundles_blueBtn mr-2">Checkout</button>
+                    <button type="button" class="bundles_outlineblueBtn">Add Funds</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,847 @@
+<!--header-->
+<header class="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 d-flex justify-content-between align-items-center">
+                <a href="index" class="logo">
+                    <span class="color_blue">bundles</span>
+                    <span class="color_white">finance</span>
+                </a>
+                <div class="">
+
+
+                    <div class="dropdown nav-item">
+                        <a class="dropdown-toggle nav-link" href="#" role="button" id="basic-nav-dropdown"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="/NFT/account"><img src="./../../../assets/images/user.svg" alt=""></a>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="basic-nav-dropdown">
+                            <span class="pop-arrow"></span>
+                            <!-- <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/profile">Profile</a> -->
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center"
+                                routerLink="/NFT/marketplace">MarketPlace</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/my-collections">My
+                                Collections</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/account">Account</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!--contents-->
+<div class="container">
+    <div class="common_scn pt-3">
+        <div class="d-flex align-items-center justify-content-end py-2 mb-3">
+            
+            <div class="f28-500" *ngIf="tokenData.purchased != 0  && tokenData.isMinted">
+                <button class="bundles_blueBtn px-5 mr-3" type="button" data-toggle="modal"
+                    data-target="#sale_modal">Sell</button>
+
+                <!-- <div class="row justify-content-center pb-4">
+                        <div class="col-xl-8  d-flex">
+                            <button class=" btn_custom blue text-center mr-5 px-4 "  *ngIf="tokenData.NFTSaleCount != 0" type="button"
+                                (click)="onClickPurchase()" style="height: 60px;">
+                               Go to direct sale
+                            </button>
+                            <button class=" btn_custom blue text-center  px-4" style="height: 60px;"
+                                *ngIf="tokenData.NFTAuctionCount != 0" type="button" (click)="onClickBid()">
+                               Go to live auction
+                            </button>
+                        </div>
+                    </div> -->
+
+
+                <!-- <button class="bundles_outlineblueBtn px-5 mr-5" type="button"
+                    (click)="onClickRoute('Auction')">Auction</button> -->
+            </div>
+
+            <div class="f28-500"
+                *ngIf="tokenData.isMinted && (tokenData.NFTAuctionCount != 0  || tokenData.NFTSaleCount != 0 )">
+                <!-- <button class="bundles_blueBtn px-5 mr-3" type="button" >Purchase</button>  -->
+                <!-- <button class="bundles_outlineblueBtn px-5" type="button" data-toggle="modal" data-target="#buy_modal">
+                    Buy</button> -->
+
+                <button class="bundles_outlineblueBtn px-5 mr-2" type="button" *ngIf="tokenData.NFTAuctionCount != 0"
+                    type="button" (click)="onClickBid()">
+                    Go to live auction</button>
+                <button class="bundles_outlineblueBtn px-5" type="button" *ngIf="tokenData.NFTSaleCount != 0"
+                    type="button" (click)="onClickPurchase()">
+                    Go to direct sale</button>
+            </div>
+
+        </div>
+        <div class="white_bx_scn p-40">
+            <div class="row">
+                <div class="col-lg-6">
+                    <img style="    max-height: 600px;"
+                        src="{{tokenData && tokenData.nft_detail.nft_image ? tokenData.nft_detail.nft_image :'https://login.connect.realtor/7a8cbb7079d70bd64c469435a71b4db9.gif'}}"
+                        alt="" class="w-100">
+                    <div class="own_profiile">
+                        <img *ngIf="tokenData.nft_detail.nft_creator == this.userAccount"
+                            src="{{showObj && showObj.user_image ? showObj.user_image :'./../../../assets/images/userbig.svg'}}"
+                            alt="">
+                        <p *ngIf="tokenData.nft_detail.nft_creator == this.userAccount">Owned by <span
+                                class="color_blue">you</span></p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="d-flex justify-content-between align-items-center  mb-4">
+                        <div class="d-flex">
+                            <button type="button" class="rf-cmn-btn refresh_btn mr-4"
+                                (click)="onClickRefresh()">Refresh</button>
+                            <button type="button" class="rf-cmn-btn transfer_btn" *ngIf="tokenData.purchased != 0 "
+                                data-toggle="modal" data-target="#TransferModal">Transfer</button>
+                        </div>
+                        <div class="f18-500" >Bund NFT :
+                            {{showObj.bundNFTbalance ? showObj.bundNFTbalance :'0' }}</div>
+                        <!-- <div class="f18-500"> : {{tokenData.purchased ? tokenData.purchased :'0' }}</div> -->
+
+                    </div>
+                    <h4 class="f30-600">{{tokenData && tokenData.nft_detail.nft_name ? tokenData.nft_detail.nft_name
+                        :'--'}}&nbsp;
+                        <span class="badge badge-pill badge-success"
+                            *ngIf=" tokenData.isMinted  == true">Approved</span>
+                        <span class="badge badge-pill badge-danger"
+                            *ngIf=" tokenData.isMinted == false && tokenData.statusApprove != ''">Declined</span>
+                        <span class="badge badge-pill badge-warning"
+                            *ngIf=" tokenData.isMinted == false && tokenData.statusApprove == ''">Pending</span>
+
+                        <!-- <span class="badge badge-pill badge-success">Success</span> -->
+
+                    </h4>
+                    <p class="md_info">{{tokenData && tokenData.nft_detail.nft_desc ? tokenData.nft_detail.nft_desc
+                        :'--'}}</p>
+                    <div id="accordion" class="bundles_accordian">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                        <img src="./../../../assets/images/properties.svg" alt="" />
+                                        Properties
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 pb-3">
+                                            <div class="text-uppercase color_blue fs_14">ID</div>
+                                            <div class="f18-500">{{tokenData && tokenData.index ? tokenData.index
+                                                :'0'}}</div>
+                                        </div>
+
+                                        <div class="col-md-6 pb-3">
+                                            <div class="text-uppercase color_blue fs_14"> Total Copies</div>
+                                            <div class="f18-500">{{tokenData && tokenData.nft_detail.nft_copies ?
+                                                tokenData.nft_detail.nft_copies :'0'}}</div>
+                                            <!-- <div class="f13-500">100% have this trait</div> -->
+                                        </div>
+
+                                        <div class="col-md-6 pb-3">
+                                            <div class="text-uppercase color_blue fs_14">
+                                                Your Balance</div>
+                                            <!-- <div class="f18-500">{{tokenData && tokenData.nft_detail.nft_ext_link ?
+                                                tokenData.nft_detail.nft_ext_link :'--'}}</div> -->
+                                            <div class="f18-500">{{tokenData.purchased ? tokenData.purchased :'0' }} {{tokenData &&
+                                                tokenData.nft_detail.nft_name ?
+                                                tokenData.nft_detail.nft_name
+                                                :' '}}
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6 pb-3">
+                                            <div class="text-uppercase color_blue fs_14">Royalty</div>
+                                            <div class="f18-500">{{tokenData && tokenData.nft_detail.nft_fee ?
+                                                tokenData.nft_detail.nft_fee
+                                                :'0'}}%</div>
+                                        </div>
+
+
+
+                                        <div class="col-md-6 pb-3">
+                                            <div class="text-uppercase color_blue fs_14"> Sold Using BUNDNFT</div>
+
+                                            <div class="f18-500">{{showObj.NFTsold ? showObj.NFTsold :'0' }}</div>
+                                        </div>
+
+
+                                        <!-- <div class="col-md-6 pb-3">
+                                            <div class="text-uppercase color_blue fs_14">Royalty</div>
+                                            <div class="f18-500">{{tokenData && tokenData.nft_detail.nft_fee ?
+                                                tokenData.nft_detail.nft_fee
+                                                :'0'}}%</div>
+                                        </div> -->
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        <img src="./../../../assets/images/chaininfo.svg" alt="" />
+                                        Chain Info
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="text-uppercase color_blue fs_14">Contract Address</div>
+                                    <div class="f18-500 pb-2">{{ tokenData.contractAddress| slice:0:6}}... {{
+                                        tokenData.contractAddress| slice:-4}}
+                                    </div>
+                                    <div class="text-uppercase color_blue fs_14">Blockchain</div>
+                                    <div class="f18-500">Ethereum</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center pb-4">
+                            <div class="col-xl-8  d-flex"
+                                *ngIf="tokenData.isMinted == false && tokenData.statusApprove == '' && ownerAccount == userAccount ">
+                                <button class=" btn_custom blue text-center mr-5 px-4 " type="button"
+                                    (click)="approveArtist()">
+                                    Approve
+                                </button>
+                                <button class=" btn_custom blue text-center  px-4" type="button" data-toggle="modal"
+                                    data-target="#DeclineModal">
+                                    Decline
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                        <!-- <div class="row justify-content-center pb-4">
+                            <div class="col-xl-8  d-flex">
+                                <button class=" btn_custom blue text-center mr-5 px-4 "  *ngIf="tokenData.NFTSaleCount != 0" type="button"
+                                    (click)="onClickPurchase()" style="height: 60px;">
+                                   Go to direct sale
+                                </button>
+                                <button class=" btn_custom blue text-center  px-4" style="height: 60px;"
+                                    *ngIf="tokenData.NFTAuctionCount != 0" type="button" (click)="onClickBid()">
+                                   Go to live auction
+                                </button>
+                            </div>
+                        </div> -->
+
+
+                    </div>
+                </div>
+                <div class="col-12 d-flex justify-content-center align-items-center  mb-4"
+                    *ngIf="tokenData.nft_detail.nft_creator == ownerAccount && tokenData.nft_detail.nft_isSelf == '0' && showObj.NFTsold != tokenData.copies ">
+                    <button class="bundles_blueBtn px-5 mr-3" type="button"
+                        [attr.disabled]="showObj.NFTsold == tokenData.copies ? true :null"
+                        (click)="onClickApprove()">Approve BUNDNFT</button>
+                    <button class="bundles_outlineblueBtn px-5" data-toggle="modal" data-target="#BuyNow" type="button"
+                        [attr.disabled]="showObj.NFTsold == tokenData.copies ? true :null">Buy with BUNDNFT</button>
+                </div>
+                <div class="col-12">
+                    <div id="accordion2" class="bundles_accordian">
+                        <!-- <div class="card">
+                            <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link " data-toggle="collapse" data-target="#collapseThree"
+                                        aria-expanded="false" aria-controls="collapseThree">
+                                        <img src="./../../../assets/images/offers.svg" alt="" />
+                                        Offers
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                data-parent="#accordion2">
+                                <div class="card-body">
+                                    Offers
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingFour">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                        data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        <img src="./../../../assets/images/trading.svg" alt="" />
+                                        Trading History
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+                                data-parent="#accordion2">
+                                <div class="card-body">
+                                    Trading History
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="card">
+                            <div class="card-header" id="headingFive">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link " data-toggle="collapse" data-target="#collapseFive"
+                                        aria-expanded="false" aria-controls="collapseFive">
+                                        <img src="./../../../assets/images/socialLink.svg" alt="" />
+                                        Social Media Links
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFive" class="collapse show" aria-labelledby="headingFive"
+                                data-parent="#accordion2">
+                                <div class="card-body">
+                                    <ul class="list-unstyled mb-0 d-flex align-items-center flex-wrap">
+                                        <li class="mr-3"
+                                            *ngIf="tokenData && tokenData.nft_detail.nft_telegram_link != ''">
+                                            <a href="{{tokenData && tokenData.nft_detail.nft_telegram_link ?
+                                                tokenData.nft_detail.nft_telegram_link :'--'}}" target="_blank"
+                                                rel="noreferrer" class="fridge_whitesocial_btn telegram">
+                                                Telegram
+                                            </a>
+                                        </li>
+                                        <li class="mr-3"
+                                            *ngIf="tokenData && tokenData.nft_detail.nft_twitter_link != ''">
+                                            <a href="{{tokenData && tokenData.nft_detail.nft_twitter_link ?
+                                                tokenData.nft_detail.nft_twitter_link :'--'}}" target="_blank"
+                                                rel="noreferrer" class="fridge_whitesocial_btn twitter">
+                                                Twitter
+                                            </a>
+                                        </li>
+                                        <li class="mr-3"
+                                            *ngIf="tokenData && tokenData.nft_detail.nft_discord_link != ''">
+                                            <a href="{{tokenData && tokenData.nft_detail.nft_discord_link ?
+                                                tokenData.nft_detail.nft_discord_link :'--'}}" target="_blank"
+                                                rel="noreferrer" class="fridge_whitesocial_btn discord">
+                                                Discord
+                                            </a>
+                                        </li>
+                                        <li class="mr-3">
+                                            <a href="{{tokenData && tokenData.nft_detail.nft_website_link ?
+                                                tokenData.nft_detail.nft_website_link :'--'}}" target="_blank"
+                                                rel="noreferrer" class="fridge_whitesocial_btn web">
+                                                Website
+                                            </a>
+                                        </li>
+                                        <li class="mr-3"
+                                            *ngIf="tokenData && tokenData.nft_detail.nft_medium_link != ''">
+                                            <a href="{{tokenData && tokenData.nft_detail.nft_medium_link ?
+                                                tokenData.nft_detail.nft_medium_link :'--'}}" target="_blank"
+                                                rel="noreferrer" class="fridge_whitesocial_btn medium">
+                                                Medium
+                                            </a>
+                                        </li>
+                                        <li class="mr-3"
+                                            *ngIf="tokenData && tokenData.nft_detail.nft_instagram_link != ''">
+                                            <a href="{{tokenData && tokenData.nft_detail.nft_instagram_link ?
+                                                tokenData.nft_detail.nft_instagram_link :'--'}}" target="_blank"
+                                                rel="noreferrer" class="fridge_whitesocial_btn instagram">
+                                                Instagram
+                                            </a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-5">
+            <!-- <div class="fs_14"><b>Note:</b> Approve NumdNFT and Purchase button will show only if user has BundNFT in
+                their wallet.</div> -->
+        </div>
+    </div>
+</div>
+<!--footer-->
+<footer>
+    <div class="container">
+        <h3 class="mt-5">Links</h3>
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDefi" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Announcements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDiscussion" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Discussion </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://medium.com/@bundles.finance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Medium</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/BundlesFinance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/twitter.png" alt=""></span>
+                            <span class="label">Twitter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.coingecko.com/en/coins/bundles" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coingecko.webp" alt=""></span>
+                            <span class="label">CoinGecko</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://coinmarketcap.com/currencies/bundles/" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coinmarketcap.png" alt=""></span>
+                            <span class="label">CoinMarketCap</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://app.uniswap.org/#/swap?inputCurrency=0x8d3e855f3f55109d473735ab76f753218400fe96"
+                            target="_blank">
+                            <span class="icon"><img src="../../assets/images/uniswap.png" alt=""></span>
+                            <span class="label">Uniswap</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://bit.ly/2MxOsWC" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Tokenomics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/channel/UC9mrNsIf11EJ7oIkaDuX9FQ" target="_blank">
+                            <span class="icon"><img src="../../assets/images/youtube.jpeg" alt=""></span>
+                            <span class="label">Join our channel</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- Buy Modal -->
+<div class="modal fade defmodal" id="BuyNow" tabindex="-1" role="dialog" aria-labelledby="BuyNowModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close closeas" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+                <h2 class="mb-4">Buy {{tokenData && tokenData.nft_detail.nft_name ? tokenData.nft_detail.nft_name
+                    :'--'}} <br><span style="    font-size: 20px;">[ Price = {{tokenData &&
+                        tokenData.price
+                        ?
+                        tokenData.price +' BUND NFT':'0' }}]</span></h2>
+
+                <label class="fs_24 font-weight-bold">Choose Quantity</label>
+                <form name="buyForm" [formGroup]="buyForm">
+
+                    <div class="form-group pb-4">
+                        <input type="number" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && buyForm.controls.amount.errors }"
+                            (keyup)="checkBuyAmt($event)" formControlName="amount">
+                        <div class="min_max_value">
+                            <span>Approved</span>
+                            <span>{{showObj.approvedNFT ? showObj.approvedNFT :'0'}}</span>
+                        </div>
+                        <div class="min_max_value">
+                            <span>Price</span>
+                            <span>{{showObj.keyUpPrice ? showObj.keyUpPrice :'0'}}</span>
+                        </div>
+                    </div>
+                </form>
+
+                <form>
+                    <div class="d-flex flex-wrap align-items-center justify-content-end">
+
+                        <div class="mb-2">
+                            <button class="btn_custom blue w-100" (click)="onClickBuy()">Buy</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Transfer -->
+<div class="modal fade defmodal" id="TransferModal" tabindex="-1" role="dialog" aria-labelledby="TransferModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close closeas" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+                <h2>Transfer {{tokenData && tokenData.nft_detail.nft_name ? tokenData.nft_detail.nft_name
+                    :'--'}}</h2>
+                <form name="transferForm" [formGroup]="transferForm">
+                    <div class="custom_range mb-4 mt-5 text-center">
+                        <img src="{{tokenData && tokenData.nft_detail.nft_image ? tokenData.nft_detail.nft_image :'./../../../assets/images/item.png'}}"
+                            class="img-fluid imageHeight" alt="" />
+                    </div>
+                    <!--  -->
+                    <div class="custom_range position-relative mb-4">
+                        <p class="fs_16 color_blue mb-2">Quantity</p>
+                        <input type="number" class="form-control" (keyup)="onKeyUpTransferAMT($event)"
+                            [ngClass]="{ 'is-invalid': submitted1 && transferForm.controls.amount.errors }"
+                            formControlName="amount">
+                        <div class="fridge-err" *ngIf="submitted1 && transferForm.controls.amount.errors">
+                            <span *ngIf="transferForm.controls.amount.errors?.required">This field is required.</span>
+                            <span *ngIf="transferForm.controls.amount.errors?.pattern"> Please enter valid
+                                address.</span>
+                        </div>
+
+
+                    </div>
+                    <div class="custom_range  position-relative">
+                        <p class="fs_16 color_blue mb-2">Wallet address</p>
+                        <input type="text" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted1 && transferForm.controls.toAddress.errors }"
+                            formControlName="toAddress">
+
+                        <div class="fridge-err" *ngIf="submitted1 && transferForm.controls.toAddress.errors">
+                            <span *ngIf="transferForm.controls.toAddress.errors?.required">This field is
+                                required.</span>
+                            <span *ngIf="transferForm.controls.toAddress.errors?.pattern"> Please enter valid
+                                address.</span>
+                        </div>
+
+                    </div>
+                    <div class="mt-4">
+                        <!-- <p class="fs_16 pt-3">A piece of description for the next step goes here.</p> -->
+                        <button class="btn_custom blue w-100" (click)="onClickSubmitTransfer()">Transfer {{tokenData &&
+                            tokenData.nft_detail.nft_name ? tokenData.nft_detail.nft_name
+                            :'--'}} Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Purchase -->
+<div class="modal fade defmodal" id="PurchaseModal" tabindex="-1" role="dialog" aria-labelledby="PurchaseModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close closeas" data-dismiss="modal" aria-label="Close"
+                (click)="onClosePurchase()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+                <h2>Purchase {{tokenData &&
+                    tokenData.nft_detail.nft_name ? tokenData.nft_detail.nft_name
+                    :'--'}}</h2>
+                <form name="purchaseForm" [formGroup]="purchaseForm">
+                    <div class="custom_range mb-4 mt-5 ">
+                        <p class="fs_16 color_blue mb-2">Choose Seller</p>
+                        <div class="row">
+                            <ng-container *ngFor="let obj of sellers;">
+                                <div class="col-md-4 mb-2">
+                                    <div class="sllr_ckbx">
+                                        <input type="radio" value="{{obj.seller}}" (click)="onClickRadio(obj.price,obj)"
+                                            formControlName="seller" name="seller">
+                                        <div class="sllrbx">
+                                            <div class="sllr_img">
+                                                <img src="./assets/images/unisex.png" alt="" />
+                                            </div>
+                                            <h6 style="font-size: 14px">{{obj.quantity}} NFT @ {{obj.price}} ETH</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                        </div>
+                    </div>
+                    <input type="text" formControlName="price" name="price" hidden>
+
+
+                    <div class="custom_range text-content-between d-flex">
+                        <div class="col-md-6">
+                            <!-- <div class="fs_14 color_blue mb-2">ID : </div> -->
+                            <input type="text" placeholder="ID : {{tokenData &&
+                                tokenData.index ? tokenData.index :'0' }}" class="form-control" disabled>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <input type="text" formControlName="quantity"
+                                [ngClass]="{ 'is-invalid': submitted2 && purchaseForm.controls.quantity.errors }"
+                                (keyup)="onKeyUpQuantity($event)" placeholder="Enter quantity" name="quantity"
+                                class="form-control">
+
+                        </div>
+
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn_custom blue w-100" (click)="onClickPurchaseSubmit()">Finalize
+                            Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- BidModal -->
+<div class="modal fade " id="BidModal" tabindex="-1" role="dialog" aria-labelledby="BidModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <button type="button" class="close closeas" data-dismiss="modal" aria-label="Close" (click)="onCloseBid()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+                <form name="bidForm" [formGroup]="bidForm">
+                    <div class="custom_range mb-4 mt-5 ">
+                        <p class="fs_16 color_blue mb-2">Select specific bid</p>
+                        <div class="d-flex">
+                            <ng-container *ngFor="let obj of creators;let i = index;">
+                                <div class="sllr_ckbx" (click)="onClickRadioBID(obj)">
+                                    <input type="radio" value="{{obj.creator}}" name="creator"
+                                        formControlName="creator">
+                                    <div class="sllrbx">
+                                        <div class="sllr_img">
+                                            <img src="./assets/images/unisex.png" alt="" />
+                                        </div>
+                                        <h6>creator {{i + 1}}</h6>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="showBidDetails == 'show'">
+                        <hr />
+                        <div class="row pb-4">
+                            <div class="col-md-6">
+                                <div class="f16-400 text-red">Ends In :<span style="color: red;"> {{bidderInfo.end_time
+                                        ? (bidderInfo.end_time |
+                                        timer) :
+                                        '-'}}</span></div>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <div class="f16-400 text-blue d-flex">Bid Creator : <span class="elip ml-3"
+                                        style="width:70px; color: green;">
+                                        {{bidderInfo.creator | slice:0:6}}...{{bidderInfo.creator| slice:-4}}
+                                    </span></div>
+                            </div>
+                        </div>
+                        <div class="f16-400 font-weight-bold pb-2 d-flex">Starting Price :<p class="ml-2"> {{bidderInfo
+                                &&
+                                bidderInfo.start_price ?bidderInfo.start_price : '0' }} ETH</p>
+                        </div>
+                        <!-- bidderInfo.Previous -->
+                        <div class="f16-400 font-weight-bold pb-2 d-flex">Withdrawable Bid : <p class="ml-2">
+                                {{bidderInfo && bidderInfo.myPreviosBid ? ( bidderInfo.myPreviosBid ) : '0' }} ETH</p>
+                        </div>
+                        <div class="f16-400 font-weight-bold pb-2 d-flex">My Current Bid : <p class="ml-2">
+                            {{bidderInfo && bidderInfo.myBid ? ( bidderInfo.myBid ) : '0' }} ETH</p>
+                    </div>
+                        <div class="f16-400 font-weight-bold pb-2 d-flex">Highest-Bid : <p class="ml-2">
+                                {{bidderInfo && bidderInfo.getHighestBid ? ( bidderInfo.getHighestBid + ' ETH' ) : 'No
+                                bidder yet.' }} </p>
+                        </div>
+                        <div class="f16-400 font-weight-bold pb-2 d-flex">Highest-Bidder :
+                            <span *ngIf="bidderInfo.getHighestBidder == userAccount "> You </span>
+                            <span class="elip ml-3" style="width:70px;"
+                                *ngIf="bidderInfo.getHighestBidder != userAccount  && bidderInfo.getHighestBidder != '0x0000000000000000000000000000000000000000'">
+
+                                {{bidderInfo.getHighestBidder | slice:0:6}}...{{bidderInfo.getHighestBidder| slice:-4}}
+                            </span>
+                            <span
+                                *ngIf="bidderInfo.getHighestBidder == '0x0000000000000000000000000000000000000000' ">No
+                                bidder yet. </span>
+                        </div>
+                        <hr />
+                    </ng-container>
+                    <div class="d-flex justify-content-between mb-3">
+                        <div class="col-md-5">
+
+                            <input type="number" placeholder="Please Enter bid amount"
+                                [ngClass]="{ 'is-invalid': submitted3 && bidForm.controls.price.errors }"
+                                class="form-control" formControlName="price" name="price">
+                        </div>
+                        <button class="btn_custom blue" (click)="onClickOfferBidSubmit()">Offer
+                            Bid</button>
+                        <button class="btn_custom blue" (click)="onClickBidSubmit()"
+                            [attr.disabled]="bidderInfo.finalizeBid == true  ? null : true">Finalize Bid</button>
+
+                    </div>
+                    <div class="card ">
+                        <div class="card-body">
+                            <div class="f16-400 font-weight-bold pb-2">INSTRUCTIONS</div>
+                            <div class="f16-400 pb-2">This Bid can Finalize by anyone.</div>
+                            <div class="f16-400 pb-2">it can be finalized once the bidding duration is over</div>
+                            <div class="f16-400 pb-2">On finalize bid:</div>
+                            <div class="f16-400 pb-2 pl-4">(1) The token ownershi will be granted to highest bidder.
+                            </div>
+                            <div class="f16-400 pb-2 pl-4">(2) The bid amount will be transfered to the bid creator.
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- DECline model -->
+<div class="modal fade defmodal" id="DeclineModal" tabindex="-1" role="dialog" aria-labelledby="DeclineModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close closeas" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+                <h2>Enter Reason for Decline</h2>
+                <form name="declineForm" [formGroup]="declineForm">
+
+                    <div class="custom_range position-relative mb-4">
+                        <p class="fs_16 color_blue mb-2">Reason</p>
+                        <textarea type="text" class="form-control" rows="5"
+                            [ngClass]="{ 'is-invalid': submitted4 && declineForm.controls.reason.errors }"
+                            formControlName="reason">
+                            </textarea>
+                        <div class="fridge-err" *ngIf="submitted4 && declineForm.controls.reason.errors">
+                            <span *ngIf="declineForm.controls.reason.errors?.required">This field is required.</span>
+                            <span *ngIf="declineForm.controls.reason.errors?.maxlength">Field length should be less then
+                                60.</span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex flex-wrap align-items-center justify-content-end">
+
+                        <div class="mb-2">
+                            <button class="btn_custom blue w-100" (click)="rejectArtist()">Decline</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- onSaleModel -->
+<div class="modal fade" id="sale_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <h2>Choose from the following?</h2>
+
+                <a href="javascript:;" (click)="onClickRoute('Sell')" class="call_to_action blueBtn">By Sale
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+                <a (click)="onClickRoute('Auction')" href="javascript:;" class="call_to_action blueBtn">By Auction
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- onSaleModel -->
+<div class="modal fade" id="sale_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <h2>Choose from the following?</h2>
+
+                <a href="javascript:;" (click)="onClickRoute('Sell')" class="call_to_action blueBtn">By Sale
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+                <a (click)="onClickRoute('Auction')" href="javascript:;" class="call_to_action blueBtn">By Auction
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- onBuyModel -->
+<div class="modal fade" id="buy_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <h2>Choose from the following?</h2>
+
+                <a href="javascript:;" (click)="onClickPurchase()" *ngIf="tokenData.NFTSaleCount != 0"
+                    class="call_to_action blueBtn">Available on direct sale
+
+
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+                <a (click)="onClickBid()" href="javascript:;" *ngIf="tokenData.NFTAuctionCount != 0"
+                    class="call_to_action blueBtn">Available on auction
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,147 @@
+.cmngsn {
+    a {
+        position: relative;
+        display: inline-block;
+        color: #000;
+        margin: 0;
+        font-size: 60px;
+        &::before {
+            top: 32px;
+        }
+        @media screen and (max-width: 575px) {
+            font-size: 42px;
+            &::before {
+                top: 22px;
+            }
+        }
+    }
+    .bf_breadcrumb {
+        text-align: center;
+    }
+}
+
+.imageHeight{
+    height: 200px;
+    padding: 10px 0;
+    display: flex;
+    margin: 0 auto;
+}
+
+.fridge-err span {
+    font-size: 14px;
+    color: #852121;
+  }
+  .fridge-err.ng-star-inserted {
+    position: absolute;
+    bottom: -24px;
+    left: 0;
+}
+.nft_marketplaceMain{
+    display: flex;
+    align-items: flex-start;
+    .nft_leftFilterMain{
+        border-right:1px solid #d4d4d4;
+        padding: 30px;
+        width: 300px;
+        height: calc(100vh - 104px);
+    overflow: auto;
+        
+    }
+    .nft_marketplace_right{
+        width: calc(100%-300px);
+        padding-left: 50px;
+        
+    }
+}
+.nft_radiobox{
+    margin: 0 10px 10px 0;
+cursor: pointer;
+    input{
+        width: 0;
+        height: 0;cursor: pointer;
+        &:checked + span{
+            background: #5454ff;
+            color: #fff;
+        }
+    }
+    span{
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 6px 16px;
+        background: #fff;
+        border: 2px solid #5454ff;
+        line-height: 23px;
+        color: #5454ff;
+        display: inline-block;
+        text-align: center;
+    }
+}
+
+
+
+
+.dropdown-toggle {
+    border: 2px solid#d4d4d4;
+    color: #f30c0c;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius:18px;
+    &::after {
+      content: none;
+    }
+    &:hover {
+      color:#ffff;
+      background:#d4d4d4;
+      border: 2px solid#d4d4d4;
+    }
+  }
+  .dropdown-menu {
+    border-radius:20px;
+    padding: 20px 0;
+    width: 239px;
+    top: calc(100% - -7px);
+    box-shadow : 0px 0px 21px #4429051a;
+    border: none;
+    .pop-arrow {
+      position: absolute;
+      width: 0;
+      height: 0;
+      display: block;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid #fff;
+      right: 40px;
+      top: -10px;
+    }
+  }
+
+  .dropdown-item:focus,
+.dropdown-item:hover,
+.dropdown-item:active {
+  color: #16181b;
+  text-decoration: none;
+  background-color: #e9ecef;
+}
+@media screen and (max-width: 767px) {
+  .navbar-brand {
+    width: 100px;
+  }
+}
+
+.bg-m{
+  background: #e2e2e2;
+}
+
+.saleTag{
+  position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.saleTagleft{
+  position: absolute;
+    top: 10px;
+    left: 10px;
+}

@@ -1,0 +1,242 @@
+<!-- https://login.connect.realtor/7a8cbb7079d70bd64c469435a71b4db9.gif -->
+
+<!--header-->
+<header class="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 d-flex justify-content-between align-items-center">
+                <a href="index" class="logo">
+                    <span class="color_blue">bundles</span>
+                    <span class="color_white">finance</span>
+                </a>
+                <div class="">
+
+
+                    <div class="dropdown nav-item">
+                        <a class="dropdown-toggle nav-link" href="#" role="button" id="basic-nav-dropdown"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="/NFT/account"><img src="./../../../assets/images/user.svg" alt=""></a>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="basic-nav-dropdown">
+                            <span class="pop-arrow"></span>
+                            <!-- <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/profile">Profile</a> -->
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/marketplace">MarketPlace</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/my-collections">My
+                                Collections</a>
+                            <div class="dropdown-divider" role="separator"></div>
+                            <a class="dropdown-item d-flex justify-content-center" routerLink="/NFT/account">Account</a>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!--contents-->
+<main>
+    <app-sidebar></app-sidebar>
+    <div class="bundles_contents_main">
+        <div class="f28-500 border-bottom py-2 mb-5">Account</div>
+        <div class="row">
+            <div class="col-lg-8">
+                <form class="bundles_form mb-3">
+                    <div class="form-group">
+                        <label>Your Wallet Address</label>
+                        <div class="input-group mb-3">
+                            <input type="text" readonly class="form-control form-control-lg"
+                                value="{{userAccount ? userAccount :'No Account Found'}}">
+                            <div class="input-group-append">
+                                <button class="btn btn-link" type="button" (click)="onclickCopy()">
+                                    <svg id="content_copy_black_24dp" xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24">
+                                        <g id="Group_11001" data-name="Group 11001">
+                                            <rect id="Rectangle_260" data-name="Rectangle 260" width="24" height="24"
+                                                fill="none" />
+                                        </g>
+                                        <g id="Group_11002" data-name="Group 11002">
+                                            <path id="Path_10055" data-name="Path 10055"
+                                                d="M15,20H5V7A1,1,0,0,0,4,6H4A1,1,0,0,0,3,7V20a2.006,2.006,0,0,0,2,2H15a1,1,0,0,0,1-1h0A1,1,0,0,0,15,20Zm5-4V4a2.006,2.006,0,0,0-2-2H9A2.006,2.006,0,0,0,7,4V16a2.006,2.006,0,0,0,2,2h9A2.006,2.006,0,0,0,20,16Zm-2,0H9V4h9Z"
+                                                fill="#5454ff" />
+                                        </g>
+                                    </svg>
+                                    COPY
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="text-center pt-3">
+                        <button class="bundles_outlineredBtn px-5" type="button">Logout</button>
+                    </div> -->
+                </form>
+                <ng-container *ngIf="ownerAccount == userAccount">
+
+                    <form class="bundles_form mb-4" name="feesForm" [formGroup]="feesForm">
+                        <div class="form-group">
+                            <label>Set Plateform Fees <span>(Current Percentage : {{showObj.fees == '0' ? '' : 
+                                    showObj.fees}}% )</span> </label>
+                            <div class="input-group mb-3">
+                                <input type="number" class="form-control form-control-lg" value=""
+                                    [ngClass]="{ 'is-invalid': submitted1 && feesForm.controls.percent.errors }"
+                                    formControlName="percent" value="5%">
+                                <div class="input-group-append ml-3">
+                                    <button class=" btn_custom blue text-center " style="width: 50px;" type="button"
+                                        (click)="onClickSetFees()">
+
+                                        Set
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="fridge-err" *ngIf="submitted1 && feesForm.controls.percent.errors">
+                                <span *ngIf="feesForm.controls.percent.errors?.required">This field is required.</span>
+                                <span
+                                    *ngIf="feesForm.controls.percent.errors?.min && !feesForm.controls.percent.errors?.required">
+                                    Please enter percentage greaterthen 1.</span>
+                                <span
+                                    *ngIf="feesForm.controls.percent.errors?.max && !feesForm.controls.percent.errors?.required">
+                                    Please enter percentage lessthen 100.</span>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <form class="bundles_form" name="collectorForm" [formGroup]="collectorForm">
+                        <div class="form-group">
+                            <label>Set Collector Address
+                                <span>(Address)</span> </label>
+                            <div class="input-group mb-3">
+                                <!-- [attr.readonly]="showObj.address == '0x0000000000000000000000000000000000000000' ? null : true" -->
+                                <!-- [attr.disabled]="showObj.address == '0x0000000000000000000000000000000000000000' ? null : true" -->
+                                <input type="text" class="form-control form-control-lg"
+                                    
+                                    placeholder="{{showObj.address == '0x0000000000000000000000000000000000000000' ? '' : showObj.address}}"
+                                    [ngClass]="{ 'is-invalid': submitted2 && collectorForm.controls.address.errors }"
+                                    formControlName="address">
+                                <div class="input-group-append ml-3">
+                                    <button class=" btn_custom blue text-center " style="width: 50px;" type="button"
+                                        
+                                        (click)="onClickSetCollector()">
+                                        Set
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="fridge-err" *ngIf="submitted2 && collectorForm.controls.address.errors">
+                                <span *ngIf="collectorForm.controls.address.errors?.required">This field is
+                                    required.</span>
+                                <span *ngIf="collectorForm.controls.address.errors?.pattern"> Please enter valid
+                                    address.</span>
+                            </div>
+                        </div>
+                    </form>
+                </ng-container>
+
+            </div>
+        </div>
+
+        <div class="row justify-content-center"  *ngIf="ownerAccount == userAccount">
+
+            <div class="col-xl-6  d-flex">
+
+
+                <button class=" btn_custom blue text-center mr-5   px-4" type="button" (click)="onClickDrain()">
+
+                    Drain Fund
+                </button>
+
+                <button class=" btn_custom blue text-center mr-5 px-4" type="button" (click)="onClickClaim()">
+
+                    Claim BUNDNFT
+                </button>
+
+                <button class=" btn_custom blue text-center  px-4" type="button" (click)="onClickBurn()">
+
+                    Burn BUNDNFT
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</main>
+
+<!--footer-->
+<footer>
+    <div class="container">
+        <h3 class="mt-5">Links</h3>
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDefi" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Announcements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://t.me/BundlesFinanceDiscussion" target="_blank">
+                            <span class="icon"><img src="../../assets/images/telegram.png" alt=""></span>
+                            <span class="label">Telegram Discussion </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://medium.com/@bundles.finance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Medium</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/BundlesFinance" target="_blank">
+                            <span class="icon"><img src="../../assets/images/twitter.png" alt=""></span>
+                            <span class="label">Twitter</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.coingecko.com/en/coins/bundles" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coingecko.webp" alt=""></span>
+                            <span class="label">CoinGecko</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://coinmarketcap.com/currencies/bundles/" target="_blank">
+                            <span class="icon"><img src="../../assets/images/coinmarketcap.png" alt=""></span>
+                            <span class="label">CoinMarketCap</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://app.uniswap.org/#/swap?inputCurrency=0x8d3e855f3f55109d473735ab76f753218400fe96"
+                            target="_blank">
+                            <span class="icon"><img src="../../assets/images/uniswap.png" alt=""></span>
+                            <span class="label">Uniswap</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <ul class="social_media">
+                    <li>
+                        <a href="https://bit.ly/2MxOsWC" target="_blank">
+                            <span class="icon"><img src="../../assets/images/medium.png" alt=""></span>
+                            <span class="label">Tokenomics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/channel/UC9mrNsIf11EJ7oIkaDuX9FQ" target="_blank">
+                            <span class="icon"><img src="../../assets/images/youtube.jpeg" alt=""></span>
+                            <span class="label">Join our channel</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>

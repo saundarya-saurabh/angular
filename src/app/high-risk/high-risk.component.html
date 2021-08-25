@@ -1,0 +1,445 @@
+<app-header1></app-header1>
+
+<!-- if -----login false -->
+<div class="sub_header" *ngIf="login == false">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="sub_header_block">
+                    <h3>Use your crypto-prediction<br /> skills to earn APY.</h3>
+                    <p>Connect your wallet to get started.</p>
+                    <a href="javascript:;" (click)="connectToMetaMask()" class="call_to_action">Connect Wallet
+                        <img src="./assets/images/right-arrow.svg" alt="" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- if login true -->
+<div class="sub_header" *ngIf="login == true">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="sub_header_block">
+                    <p class="title_small">Staking period ends in</p>
+                    <div class="timer_wrap">
+                        <div class="timer">{{ stakHourEnds.day && stakHourEnds.day >0 ? stakHourEnds.day : 0}}:
+                            {{ stakHourEnds.hour && stakHourEnds.hour >0 ? stakHourEnds.hour : 0}}:
+                            {{ stakHourEnds.min&& stakHourEnds.min >0 ? stakHourEnds.min : 0}}</div>
+                        <div class="timer_unit">
+                            <span>DAYS</span>
+                            <span>HRS</span>
+                            <span>MINS</span>
+                        </div>
+                    </div>
+                    <!-- <p class="subtext">
+                        <img src="./assets/images/trending_up.svg" alt="">
+                        You are currently in the top 3% of the total stakes.</p> -->
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="sub_header_block">
+                    <p class="title_small">Balances (BUND)</p>
+                    <div class="row balance_detail">
+                        <div class="col-md-4 col-6">
+                            <p>Wallet</p>
+                            <span>{{balance.wallet ? balance.wallet :0}}</span>
+                        </div>
+                        <div class="col-md-4 col-6">
+                            <p>Staked</p>
+                            <span>{{balance.staked ? balance.staked :0}}</span>
+                        </div>
+                    </div>
+                    <div class="row balance_detail brd_top">
+                        <div class="col-md-4 col-6">
+                            <p>Approved</p>
+                            <span>{{balance.approved ? balance.approved :0}}</span>
+                        </div>
+                        <div class="col-md-4 col-6">
+                            <p>To claim</p>
+                            <span>{{balance.claim ? balance.claim :0}}</span>
+                        </div>
+                    </div>
+                    <div class="row btn_wrap mt-3">
+                        <div class="col-md-4 col-6">
+                            <button class="btn_custom white" (click)="onClickApprove()">Approve</button>
+                        </div>
+                        <div class="col-md-4 col-6">
+                            <button class="btn_custom blue" (click)="onClickClaimBund()"
+                                [attr.disabled]="balance.claim == 0 ? true:null">Claim</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="sub_header_block">
+                    <p class="title_small">Next stake starts in</p>
+                    <div class="timer_wrap">
+                        <div class="timer">{{ nextOppOccures.day && nextOppOccures.day > 0 ? nextOppOccures.day : 0}}:
+                            {{ nextOppOccures.hour && nextOppOccures.hour > 0 ? nextOppOccures.hour : 0}}:
+                            {{ nextOppOccures.min && nextOppOccures.min > 0 ? nextOppOccures.min : 0}}</div>
+                        <div class="timer_unit">
+                            <span>DAYS</span>
+                            <span>HRS</span>
+                            <span>MINS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container py_100">
+    <div class="row">
+        <!-- if -----login false -->
+        <div class="col-lg-3" *ngIf="login == false">
+            <span class="bf_breadcrumb">
+                <a href="https://bundles.finance/">High risk bundles</a>
+            </span>
+            <h2>Available<br /> Bundles</h2>
+            <p>Connect your wallet to start staking.</p>
+        </div>
+        <!-- if -----login true -->
+        <div class="col-lg-3" *ngIf="login == true">
+            <span class="bf_breadcrumb">
+                <a href="index">High risk bundles</a>
+            </span>
+            <h2>Choose your<br /> bundle</h2>
+            <p>Pick a bundle to place your stake on.</p>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="row">
+                <!-- BTC -->
+                <div class="col-lg-4 bundle_block">
+                    <button href="javascript:;"
+                        [attr.disabled]="disableObj.BTC == 'YES' || stakHourEnds.min <= 0  ? true :null"
+                        (click)="ChangeModel('Bitcoin',0)" class="bundle_detail">
+                        <div class="bundle_detail_r1">
+                            <span>Bitcoin</span>
+                            <span>${{dataObj && dataObj.BTC ?dataObj.BTC :0 }}</span>
+                        </div>
+                        <div class="bundle_detail_r2">
+                            <span class="color_gray">BTC</span>
+                            <!-- <span class="color_green">10%</span> -->
+                        </div>
+                        <img class="bundle_logo" src="./assets/images/bitcoin.png" alt="">
+                    </button>
+                </div>
+                <!-- ETH -->
+                <div class="col-lg-4 bundle_block">
+                    <button href="javascript:;"
+                        [attr.disabled]="disableObj.ETH == 'YES'|| stakHourEnds.min <= 0  ? true :null"
+                        (click)="ChangeModel('Ethereum',1)" class="bundle_detail">
+                        <div class="bundle_detail_r1">
+                            <span>Ethereum</span>
+                            <span>${{dataObj && dataObj.ETH ?dataObj.ETH :0 }}</span>
+                        </div>
+                        <div class="bundle_detail_r2">
+                            <span class="color_gray">ETH</span>
+                            <!-- <span class="color_green">1.25%</span> -->
+                        </div>
+                        <img class="bundle_logo" src="./assets/images/ethereum.png" alt="">
+                    </button>
+                </div>
+                <!-- DOT -->
+                <div class="col-lg-4 bundle_block">
+                    <button href="javascript:;"
+                        [attr.disabled]="disableObj.DOT == 'YES'|| stakHourEnds.min <= 0  ? true :null"
+                        (click)="ChangeModel('Polkadot',2)" class="bundle_detail">
+                        <div class="bundle_detail_r1">
+                            <span>Polkadot</span>
+                            <span>$ {{dataObj && dataObj.DOT ?dataObj.DOT :0 }}</span>
+                        </div>
+                        <div class="bundle_detail_r2">
+                            <span class="color_gray">DOT</span>
+                            <!-- <span class="color_red">6.25%</span> -->
+                        </div>
+                        <img class="bundle_logo" src="../../assets/images/aJGBjJFU_400x400.jpg" alt="">
+                    </button>
+                </div>
+
+                <!-- LINK -->
+                <div class="col-lg-4 bundle_block">
+                    <button href="javascript:;"
+                        [attr.disabled]="disableObj.LINK == 'YES'|| stakHourEnds.min <= 0   ? true :null"
+                        (click)="ChangeModel('Chainlink',3)" class="bundle_detail">
+                        <div class="bundle_detail_r1">
+                            <span>Chainlink</span>
+                            <span>${{dataObj && dataObj.LINK ?dataObj.LINK :0 }}</span>
+                        </div>
+                        <div class="bundle_detail_r2">
+                            <span class="color_gray">LINK</span>
+                            <!-- <span class="color_green">1.25%</span> -->
+                        </div>
+                        <img class="bundle_logo" src="../../assets/images/chainlink-new-logo.png" alt="">
+                    </button>
+                </div>
+                <!-- XRP -->
+                <div class="col-lg-4 bundle_block">
+                    <button href="javascript:;"
+                        [attr.disabled]="disableObj.XRP == 'YES' || stakHourEnds.min <= 0  ? true :null"
+                        (click)="ChangeModel('XRP',4)" class="bundle_detail">
+                        <div class="bundle_detail_r1">
+                            <span>XRP</span>
+                            <span>${{dataObj && dataObj.XRP ?dataObj.XRP :0 }}</span>
+                        </div>
+                        <div class="bundle_detail_r2">
+                            <span class="color_gray">XRP</span>
+                            <!-- <span class="color_red">6.25%</span> -->
+                        </div>
+                        <img class="bundle_logo" src="../../assets/images/xrp.png" alt="">
+                    </button>
+                </div>
+                <!-- YFI -->
+                <div class="col-lg-4 bundle_block">
+                    <button href="javascript:;"
+                        [attr.disabled]="disableObj.YFI == 'YES'|| stakHourEnds.min <= 0   ? true :null"
+                        (click)="ChangeModel('yearn.finance',5)" class="bundle_detail">
+                        <div class="bundle_detail_r1">
+                            <span>yearn.finance</span>&nbsp;&nbsp;
+                            <span> ${{dataObj && dataObj.YFI ?dataObj.YFI :0 }}</span>
+                        </div>
+                        <div class="bundle_detail_r2">
+                            <span class="color_gray">YFI</span>
+                            <!-- <span class="color_green">1.25%</span> -->
+                        </div>
+                        <img class="bundle_logo" src="../../assets/images/yfi-192x192.png" alt="">
+                    </button>
+                </div>
+
+                <!-- CORE -->
+                <div class="col-lg-4 bundle_block">
+                    <button href="javascript:;" class="bundle_detail"
+                        [attr.disabled]="disableObj.CORE == 'YES'|| stakHourEnds.min <= 0   ? true :null"
+                        (click)="ChangeModel('cVault.finance',6)">
+                        <div class="bundle_detail_r1">
+                            <span>cVault.finance</span>
+                            <span>${{dataObj && dataObj.CORE ?dataObj.CORE :0 }}</span>
+                        </div>
+                        <div class="bundle_detail_r2">
+                            <span class="color_gray">CORE</span>
+                            <!-- <span class="color_green">1.25%</span> -->
+                        </div>
+                        <img class="bundle_logo" src="../../assets/images/cvault.finance_logo.png" alt="">
+                    </button>
+                </div>
+                <!-- BNB -->
+                <div class="col-lg-4 bundle_block">
+                    <button href="javascript:;" class="bundle_detail"
+                        [attr.disabled]="disableObj.BNB == 'YES'|| stakHourEnds.min <= 0   ? true :null"
+                        (click)="ChangeModel('Binance Coin',7)">
+                        <div class="bundle_detail_r1">
+                            <span>Binance Coin</span>
+                            <span>${{dataObj && dataObj.BNB ?dataObj.BNB :0 }}</span>
+                        </div>
+                        <div class="bundle_detail_r2">
+                            <span class="color_gray">BNB</span>
+                            <!-- <span class="color_red">6.25%</span> -->
+                        </div>
+                        <img class="bundle_logo" src="../../assets/images/binance-coin-logo.png" alt="">
+                    </button>
+                </div>
+                <!-- UNI -->
+                <div class="col-lg-4 bundle_block">
+                    <button href="javascript:;" class="bundle_detail"
+                        [attr.disabled]="disableObj.UNI == 'YES' || stakHourEnds.min <= 0  ? true :null"
+                        (click)="ChangeModel('Uniswap',8)">
+                        <div class="bundle_detail_r1">
+                            <span>Uniswap</span>
+                            <span>${{dataObj && dataObj.UNI ?dataObj.UNI :0 }}</span>
+                        </div>
+                        <div class="bundle_detail_r2">
+                            <span class="color_gray">UNI</span>
+                            <!-- <span class="color_green">1.25%</span> -->
+                        </div>
+                        <img class="bundle_logo" src="../../assets/images/uniswap-uni.png" alt="">
+                    </button>
+                </div>
+
+
+                <!-- USDT -->
+                <div class="col-lg-4 bundle_block">
+                    <button href="javascript:;" class="bundle_detail"
+                        [attr.disabled]="disableObj.USDT == 'YES' || stakHourEnds.min <= 0  ? true :null"
+                        (click)="ChangeModel('Tether',9)">
+                        <div class="bundle_detail_r1">
+                            <span>Tether</span>
+                            <span>$ {{dataObj && dataObj.USDT ?dataObj.USDT :0 }}</span>
+                        </div>
+                        <div class="bundle_detail_r2">
+                            <span class="color_gray">USDT</span>
+                            <!-- <span class="color_green">1.25%</span> -->
+                        </div>
+                        <img class="bundle_logo" src="../../assets/images/Tether-logo.png" alt="">
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bg_white">
+    <div class="container py_100">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="bf_breadcrumb">
+                    <span>Top Stakers</span>
+                </div>
+                <h2>Leaderboard</h2>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-lg-12 stacker_block_head">
+                        <div class="row w-100">
+                            <div class="col-lg-1">
+                                <div class="title">Rank</div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="title ml_40">User</div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="title">score</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <perfect-scrollbar style="max-width: 925px; max-height: 800px;">
+                    <div class="row" *ngFor="let obj of leaderBoardArray;let i = index;">
+                        <div class="col-lg-12 stacker_block " [ngClass]="i == 0 ? 'v1' : (i == 1 ? 'v2' : (i == 2 ? 'v3' : 'v4' ) )" >
+                            <div class="row w-100">
+                                <div class="col-lg-1">
+                                    <div class="rank">{{obj && obj.rank && obj.rank ? obj.rank : '0'}}</div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="user">{{obj && obj.user && obj.user.username ? obj.user.username : '-'}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-7">
+                                    <div class="total_stake">{{obj && obj.score ? obj.score : 0}}%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </perfect-scrollbar>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="approve_bundal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="onClose('approve')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2>Approve BUNDS<br> from wallet</h2>
+                <form name="approveForm" [formGroup]="approveForm">
+                    <div class="custom_range">
+                        <p class="fs_16 color_blue">Add to approve BUNDS</p>
+                        <input type="number" min="1" max="{{this.balance.wallet}}" formControlName="amount"
+                            (keyup)="checkApproveAmt($event)" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted2 && approveForm.controls.amount.errors }" disabled>
+                        <input type="range" formControlName="percentage" class="custom-range" min="0" max="100"
+                            (change)="eventChangeApprove($event)" id="customRange" name="points1">
+                        <div class="min_max_value">
+                            <span>Max</span>
+                            <span>{{this.balance.wallet}}</span>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <!-- <p class="fs_16 pt-5">A piece of description for the next step goes here.</p> -->
+                        <button href="javascript:;" (click)="onSubmitApprove()"
+                            [attr.disabled]="disabled == 'YES' ? true :null" class="btn_custom blue w-100">Approve
+                            {{approveForm.value.amount}} BUNDS</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="stake_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onClose('stake')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="title"> <img src={{Modallogo}} alt="">{{Modalname}} </p>
+                <h2>How much do you<br> want to stake?</h2>
+                <form name="stakeForm" [formGroup]="stakeForm">
+                    <div class="custom_range">
+                        <p class="fs_16 color_blue">Stake BUND on {{Modalname}}</p>
+                        <input type="number" min="1" max="{{this.balance.approved}}" formControlName="amount"
+                            (keyup)="checkStakeAmt($event)" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted2 && stakeForm.controls.amount.errors }" disabled>
+
+                        <input type="range" formControlName="percentage" class="custom-range" min="0" max="100"
+                            (change)="eventChangeStake($event)" id="customRange" name="points1">
+                        <div class="min_max_value">
+                            <span>Max</span>
+                            <span>{{this.balance.approved}}</span>
+
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <!-- <p class="fs_16 pt-5">A piece of description for the next step goes here.</p> -->
+                        <button href="javascript:;" (click)="onSubmitPlaceBet()" class="btn_custom blue w-100">Stake
+                            {{stakeForm.value.amount}} BUND</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="regiter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2>Register</h2>
+                <form name="registerForm" [formGroup]="registerForm">
+                    <div class="custom_range">
+                        <p class="fs_16 color_blue">Username :</p>
+                        <input type="text" formControlName="name" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }">
+                        <!-- <div class="min_max_value">
+                        <span>Max</span>
+                    </div> -->
+                    </div>
+                    <div class="mt-5">
+                        <!-- <p class="fs_16 pt-5">This name will be displayed in leaderboard.</p> -->
+                        <button (click)="onClickRegister()" class="btn_custom blue w-100">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

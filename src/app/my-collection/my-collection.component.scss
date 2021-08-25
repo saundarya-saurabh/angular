@@ -1,0 +1,21 @@
+.cmngsn {
+    a {
+        position: relative;
+        display: inline-block;
+        color: #000;
+        margin: 0;
+        font-size: 60px;
+        &::before {
+            top: 32px;
+        }
+        @media screen and (max-width: 575px) {
+            font-size: 42px;
+            &::before {
+                top: 22px;
+            }
+        }
+    }
+    .bf_breadcrumb {
+        text-align: center;
+    }
+}

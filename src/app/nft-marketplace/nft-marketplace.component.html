@@ -1,0 +1,244 @@
+<!-- <app-header></app-header> -->
+
+<header class="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <nav class="navbar navbar-expand-lg navbar-dark">
+                    <a href="https://bundles.finance/" class="logo">
+                        <span class="color_blue">bundles</span>
+                        <span class="color_white">finance</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                           
+                        </ul>
+                    </div>
+                    <div class="right_side_link">
+                      
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="container py_100 cmngsn pt-4">
+    <div class="row">
+        <div class="col-sm-8 sm_brdcrmb">
+            <span class="bf_breadcrumb mr-3">
+                <a href="index">NFT Marketplace</a>
+            </span>
+            <!-- <a href="#" class="btn_custom blue btn_custom_sm">Sell</a> -->
+        </div>
+        <div class="col-sm-4 text-right mt-3">
+            <!-- <select class="srtslct">
+                <option>Sort by</option>
+                <option>Name</option>
+                <option>Size</option>
+            </select> -->
+        </div>
+        <div class="col-xl-12 mt-5">
+            <div class="row">
+                <div *ngFor="let obj of showData;" class="col-xl-3 col-sm-6 mb-5 fr_mr_wdt">
+                    <div class="as_nft_bx" style="cursor: pointer;" (click)="onClickRoute(obj)">
+                        <img src="{{obj && obj.image ? obj.image :'-'}}" class="img-fluid" alt="">
+                        <div class="as_in_nft_bx">
+                            <h4>{{obj && obj.name ? obj.name :'-'}}</h4>
+                            <h6>Copies : {{obj && obj.copies ? obj.copies :'0' }}</h6>
+                            <p>{{obj && obj.shortDesc ? obj.shortDesc :'-'}}</p>
+                            <h5>Price: {{obj && obj.price ? obj.price :'-'}}</h5>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-xl-3 col-sm-6 mb-5 fr_mr_wdt">
+                    <div class="as_nft_bx">
+                        <img src="./assets/images/new1.png" class="img-fluid" alt="">
+                        <div class="as_in_nft_bx">
+                            <h6>Unstoppable Domains</h6>
+                            <h4>eth2eth.crypto</h4>
+                            <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                            <h5>Price: 10 BundNFT</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-5 fr_mr_wdt">
+                    <div class="as_nft_bx">
+                        <img src="./assets/images/new1.png" class="img-fluid" alt="">
+                        <div class="as_in_nft_bx">
+                            <h6>Unstoppable Domains</h6>
+                            <h4>eth2eth.crypto</h4>
+                            <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                            <h5>Price: 10 BundNFT</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-5 fr_mr_wdt">
+                    <div class="as_nft_bx">
+                        <img src="./assets/images/new1.png" class="img-fluid" alt="">
+                        <div class="as_in_nft_bx">
+                            <h6>Unstoppable Domains</h6>
+                            <h4>eth2eth.crypto</h4>
+                            <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                            <h5>Price: 10 BundNFT</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-5 fr_mr_wdt">
+                    <div class="as_nft_bx">
+                        <img src="./assets/images/new1.png" class="img-fluid" alt="">
+                        <div class="as_in_nft_bx">
+                            <h6>Unstoppable Domains</h6>
+                            <h4>eth2eth.crypto</h4>
+                            <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                            <h5>Price: 10 BundNFT</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-5 fr_mr_wdt">
+                    <div class="as_nft_bx">
+                        <img src="./assets/images/new1.png" class="img-fluid" alt="">
+                        <div class="as_in_nft_bx">
+                            <h6>Unstoppable Domains</h6>
+                            <h4>eth2eth.crypto</h4>
+                            <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                            <h5>Price: 10 BundNFT</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-5 fr_mr_wdt">
+                    <div class="as_nft_bx">
+                        <img src="./assets/images/new1.png" class="img-fluid" alt="">
+                        <div class="as_in_nft_bx">
+                            <h6>Unstoppable Domains</h6>
+                            <h4>eth2eth.crypto</h4>
+                            <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                            <h5>Price: 10 BundNFT</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-5 fr_mr_wdt">
+                    <div class="as_nft_bx">
+                        <img src="./assets/images/new1.png" class="img-fluid" alt="">
+                        <div class="as_in_nft_bx">
+                            <h6>Unstoppable Domains</h6>
+                            <h4>eth2eth.crypto</h4>
+                            <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                            <h5>Price: 10 BundNFT</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-5 fr_mr_wdt">
+                    <div class="as_nft_bx">
+                        <img src="./assets/images/new1.png" class="img-fluid" alt="">
+                        <div class="as_in_nft_bx">
+                            <h6>Unstoppable Domains</h6>
+                            <h4>eth2eth.crypto</h4>
+                            <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                            <h5>Price: 10 BundNFT</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 mb-5 fr_mr_wdt">
+                    <div class="as_nft_bx">
+                        <img src="./assets/images/new1.png" class="img-fluid" alt="">
+                        <div class="as_in_nft_bx">
+                            <h6>Unstoppable Domains</h6>
+                            <h4>eth2eth.crypto</h4>
+                            <p>Lorem ipsum dolor sit consectetur lorem adipiscing dorem consectetur pretium</p>
+                            <h5>Price: 10 BundNFT</h5>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="col-xl-12" *ngIf="owner == userAccount">
+            <div class="row">
+                <div class="col-xl-4 col-sm-6">
+
+                </div>
+                <div class="col-xl-4 col-sm-6 d-flex">
+                    <div style="margin-right: 50px;">
+                        <button class="call_to_action blue_txt"  data-toggle="modal" data-target="#claim_modal">Claim
+                            <img class="ml-1" src="./assets/images/right-arrow-blue.svg" alt="" />
+                        </button>
+                    </div>
+                    <div>
+                        <button data-toggle="modal" data-target="#burn_modal" class="call_to_action blue">Burn
+                            <img class="ml-1" src="./assets/images/right-arrow-white.svg" alt="" />
+                        </button>
+                    </div>
+
+
+
+                </div>
+                <div class="col-xl-4 col-sm-6">
+
+                </div>
+                <!-- <div class="col-md-6">
+                    <button class="call_to_action blue_txt">Claim Now
+                        <img src="./assets/images/right-arrow-blue.svg" alt="" />
+                    </button>
+                </div> -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="claim_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <h2>Choose from the following?</h2>
+
+                <a href="javascript:;" (click)="onClickClaim('old')" class="call_to_action blueBtn">Claim Old
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+                <a href="javascript:;" (click)="onClickClaim('new')" class="call_to_action blueBtn">Claim New
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="burn_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <h2>Choose from the following?</h2>
+
+                <a href="javascript:;" (click)="onClickBurn('old')" class="call_to_action blueBtn">Burn Old
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+                <a (click)="onClickBurn('new')" href="javascript:;" class="call_to_action blueBtn">Burn New
+                    <img src="../../assets/images/right-arrow.svg" alt="" />
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
